@@ -1,0 +1,27 @@
+.header-bloc {
+    background-color: rgba(255, 255, 255, 0.059);
+    align-items: center; 
+    top: 0; 
+    width: 100%; 
+    display: flex;
+    justify-content: space-between;
+  .header_logo {
+    /* Prevents logo from shrinking */
+    flex-shrink: 0; 
+  }
+  .headerPart {
+    margin-left: 20px;
+  }
+  .userLogo {
+    display: flex; /* Ensure the user icon is properly aligned */
+    align-items: center;
+  }
+  .ulHeader {
+    display: flex; /* Use flex for navigation items */
+    justify-content: flex-end; /* Align navigation items to the right */
+    align-items: center; /* Vertically center the items */
+    list-style-type: none; /* Remove bullet points */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+  }
+}

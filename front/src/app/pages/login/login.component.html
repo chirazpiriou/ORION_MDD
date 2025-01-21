@@ -1,1 +1,17 @@
-<p>login works!</p>
+<div class="form_style login-bloc">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-group">
+        <label for="emailOrUsername">E-mail ou nom d’utilisateur</label>
+        <input formControlName="emailOrUsername" type="text" id="emailOrUsername">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input formControlName="password" type="password" id="password">
+      </div>
+
+      <button class="violetButton" type="submit">Se connecter</button>
+      
+    </form>
+  </div>

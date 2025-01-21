@@ -1,4 +1,55 @@
-/* You can add global styles to this file, and also import other style files */
-
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+.form_style {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+
+  .form-group {
+    width: 100%;
+    max-width: 250px; 
+    margin-bottom: 15px;
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight:normal;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+  }
+
+  button {
+    max-width: 250px; 
+    padding: 10px 0;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    &.violetButton {
+
+        background-color: #7763C5;
+        color: white;
+        &:hover {
+        background-color: #6653a5; 
+        
+        }
+  }
+
+
+    
+ 
+    
+    
+  
+  }
+}
