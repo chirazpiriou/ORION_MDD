@@ -99,6 +99,14 @@
 			<artifactId>mapstruct-processor</artifactId>
 			<version>1.5.1.Final</version>
 		</dependency>
+		<!-- Lombok is a compile-time library that reduces boilerplate code by generating getters,
+		 setters, constructors, and other utility methods. -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+			<version>1.18.30</version>
+		</dependency>
 	</dependencies>
 
 	<build>
