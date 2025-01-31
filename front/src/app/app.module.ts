@@ -10,6 +10,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from './core/core.module';
 
+
 @NgModule({
   declarations: [AppComponent, HomeComponent, RegisterComponent, LoginComponent],
   imports: [
@@ -18,9 +19,12 @@ import { CoreModule } from './core/core.module';
     BrowserAnimationsModule,
     MatButtonModule,
     ReactiveFormsModule,
-    CoreModule,
+    CoreModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  
+}

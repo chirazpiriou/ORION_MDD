@@ -1,5 +1,7 @@
 .header-bloc {
     background-color: rgba(255, 255, 255, 0.059);
+    border: 1px solid black;
+    font-size: large;
     align-items: center; 
     top: 0; 
     width: 100%; 
@@ -24,4 +26,5 @@
     margin: 0; /* Remove default margin */
     padding: 0; /* Remove default padding */
   }
+
 }

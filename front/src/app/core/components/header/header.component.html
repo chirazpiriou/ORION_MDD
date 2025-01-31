@@ -2,12 +2,15 @@
     <img src="./assets/pictures/small_logo.png" alt="MDD Logo" class="header_logo">
 
     <ul class="ulHeader ">
-        <li class="headerPart "><a href="">Articles</a></li>
-        <li class="headerPart "><a href="">Thèmes</a></li>
+        <li class="headerPart "><a routerLink="/articles" routerLinkActive="active-item">Articles</a></li>
+        <li class="headerPart "><a routerLink="/themes" routerLinkActive="active-item">Thèmes</a></li>
         <li class="headerPart ">
-            <a class="userLogo" href="">
+            <a class="userLogo" routerLink="/profile" routerLinkActive="active-item">
                 <img src="./assets/pictures/User_icon.png" alt="Ellipse" class="user">
             </a>
         </li>
     </ul>
 </div>
+<a class="back" (click)="back()">
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="west"></mat-icon>
+</a>

@@ -12,4 +12,10 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  back() : void {
+    
+    alert("retour...");
+    
+  }
+
 }
