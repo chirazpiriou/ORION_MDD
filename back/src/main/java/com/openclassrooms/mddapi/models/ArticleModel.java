@@ -26,4 +26,8 @@ public class ArticleModel {
     private String contenu;
     public Timestamp created_at;
 
+    public void setCreatedAtToNow() {
+        this.created_at = new Timestamp(System.currentTimeMillis());
+    }
+
 }
