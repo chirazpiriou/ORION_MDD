@@ -1,0 +1,14 @@
+<mat-card>
+    <mat-card-title>
+    <span class="titre">{{ article.titre }}</span>
+    </mat-card-title>
+    <mat-card-subtitle>
+        <span class="date">{{ article.createdAt  | date:'EEEE d MMMM y à H:mm:ss' }} </span>
+        <span class="auteur">{{ article.auteur }}</span>
+       
+    </mat-card-subtitle>
+    <mat-card-content>
+        <span>{{ article.contenu }}</span>
+    </mat-card-content>
+
+</mat-card>
