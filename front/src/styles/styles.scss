@@ -35,8 +35,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     border: none;
     border-radius: 8px;
     font-weight: bold;
-    &.violetButton {
+    cursor: pointer;
+    width: 100%;
 
+    &.violetButton {
         background-color: #7763C5;
         color: white;
         &:hover {
