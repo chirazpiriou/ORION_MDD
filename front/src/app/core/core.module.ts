@@ -13,6 +13,9 @@ import { ArticleCreateComponent } from '../pages/article-create/article-create.c
 import { MaterialModule } from '../material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ArticleComponent } from './components/article/article.component';
+import { ArticleDetailComponent } from '../pages/article-detail/article-detail.component';
+
+
 
 @NgModule({
   declarations: [
@@ -20,7 +23,8 @@ import { ArticleComponent } from './components/article/article.component';
     ArticleListComponent,
     ThemesListComponent,
     ArticleCreateComponent,
-    ArticleComponent
+    ArticleComponent,
+    ArticleDetailComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +37,10 @@ import { ArticleComponent } from './components/article/article.component';
     HeaderComponent,
     MatToolbarModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    ArticleListComponent,
+    ArticleDetailComponent,
+    ArticleCreateComponent
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }],
 })

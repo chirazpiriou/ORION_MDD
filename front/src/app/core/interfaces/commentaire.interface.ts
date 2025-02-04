@@ -1,4 +1,4 @@
-export interface Commentaire {
+export interface commentaire {
   id: number;       
   contenu: string;   
   articleId: number; 

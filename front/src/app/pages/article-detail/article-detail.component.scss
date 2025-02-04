@@ -1,0 +1,22 @@
+
+.title_section{
+    margin-top: 2%;
+}
+.article-bloc{
+    width: 80%;
+    margin-left: 10%;
+    padding-bottom: 20px;
+    .second_line{
+        display: block;
+        margin-top: 10px;
+        margin-bottom: 20px;
+        padding-top: 10px;
+        .article_date, .article_auteur, .article_theme {
+            width: 20%; 
+            padding: 0;
+            margin-right: 2%;
+        }
+    }
+  
+    
+}

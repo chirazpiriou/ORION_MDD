@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
 
   back() : void {
     
-    alert("retour...");
+    window.history.back();
     
   }
 

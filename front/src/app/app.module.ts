@@ -11,6 +11,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from './core/core.module';
 
 
+
+
+
 @NgModule({
   declarations: [AppComponent, HomeComponent, RegisterComponent, LoginComponent],
   imports: [

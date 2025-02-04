@@ -1,6 +1,41 @@
-mat-card{
-    background-color: rgb(236, 236, 236);
-    border: 1px solid black;
-    border-radius: 20px;
-    margin: 25px;
+@import '../../../styles/styles';
+
+
+.sub_header {
+    margin-bottom:10px;
+    .create_btn{
+        float: left;
+        margin-left: 1.5%;
+    }
+}
+
+button {
+    max-width: 150px; 
+    padding: 10px 0;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+
+    &.violetButton {
+        background-color: #7763C5;
+        color: white;
+        &:hover {
+        background-color: #6653a5; 
+        
+        }
+  }}
+
+.feed_articles{
+    clear: both;
+    margin-top: 20px;
+    
+}
+.feed {   
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    grid-gap: 10px; 
+    padding: 20px;
+    
 }

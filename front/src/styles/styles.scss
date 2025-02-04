@@ -47,6 +47,23 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
         }
   }
 
+  .feed_articles{
+    clear: both;
+    margin-top: 20px;
+ 
+  }
+  .feed {
+   
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    grid-gap: 10px; 
+    padding: 20px; 
+  
+   
+  }
+
+
+
 
     
  

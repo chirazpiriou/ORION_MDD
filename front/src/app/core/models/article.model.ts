@@ -1,4 +1,4 @@
-import { Comment} from "./comment.model";
+import { Commentaire} from "./commentaire.model";
 
 export class Article {
   constructor(
@@ -6,7 +6,7 @@ export class Article {
     public titre: string,
     public auteur: string,
     public contenu: string,
-    public commentaires: Comment[],
+    public comment: Commentaire[],
     public createdAt: Date,
     public id?: number, 
   ) {}
