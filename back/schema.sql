@@ -67,15 +67,19 @@ INSERT INTO THEMES (theme, description) VALUES
   ('Microsoft Azure', "Plateforme cloud de Microsoft permettant l'hébergement d'applications, de bases de données et de services IA."),
   ('Swagger', "Outil open-source permettant de documenter, concevoir et tester des API REST."),
   ('JavaScript', "Langage de programmation essentiel pour le développement web, utilisé aussi bien côté client que côté serveur (Node.js)."),
-  ('SonarCloud', "Plateforme d analyse continue de la qualite du code.");
+  ('SonarCloud', "Plateforme d analyse continue de la qualite du code."),
+  ('GitHub', 'Plateforme de gestion de version pour le code source, utilisee pour le controle de version, la collaboration et l hebergement de projets open-source.');
+  
+
 
 
 INSERT INTO ARTICLES (titre, contenu, auteur_id, theme_id, created_at) VALUES
   ('Introduction à F#', 'Découvrez les principes fondamentaux du langage F# et comment il facilite la programmation fonctionnelle.', 1, 1, now()),
   ('Pourquoi Go est-il si rapide ?', 'Golang a été conçu pour offrir une exécution rapide et une gestion efficace de la concurrence. Explorons ses atouts.', 2, 2, now()),
   ('Déployer une application sur Microsoft Azure', 'Tutoriel pas à pas pour héberger une application web sur Microsoft Azure.', 3, 3, now()),
-  ('Documentation d’API avec Swagger', 'Swagger permet de créer des documentations interactives pour les API REST. Voici comment l’utiliser efficacement.', 4, 4, now()),
-  ('Modern JavaScript : Les nouveautés ES6+', 'Découvrez les fonctionnalités modernes de JavaScript depuis ES6 et comment elles améliorent le développement web.', 5, 5, now());
+  ('Documentation d API avec Swagger', 'Swagger permet de créer des documentations interactives pour les API REST. Voici comment l’utiliser efficacement.', 4, 4, now()),
+  ('Modern JavaScript : Les nouveautés ES6+', 'Découvrez les fonctionnalités modernes de JavaScript depuis ES6 et comment elles améliorent le développement web.', 5, 5, now()),
+  ('Introduction a GitHub', 'GitHub est une plateforme essentielle pour le developpement collaboratif. Découvrez ses fonctionnalites de gestion de version et de collaboration entre developpeurs.', 2, 7, now());
 
 INSERT INTO ABONNEMENTS (user_id, theme_id) VALUES
 (1,1),
@@ -86,10 +90,13 @@ INSERT INTO ABONNEMENTS (user_id, theme_id) VALUES
 (2,4),
 (3,1),
 (3,4),
+(3,7),
+(3,5),
 (4,1),
 (4,3),
 (5,2),
 (5,5);
+
 
 INSERT INTO COMMENTAIRES (contenu, user_id, article_id, created_at) VALUES
   ('Tres bon article sur F# ! Japprecie la simplicite du langage et son approche fonctionnelle.', 1, 1, now()),
@@ -99,4 +106,5 @@ INSERT INTO COMMENTAIRES (contenu, user_id, article_id, created_at) VALUES
   ('Jadore les nouveautes dES6+, surtout les fonctions flechees et les modules. Cela rend le code plus propre.', 5, 5, now()),
   ('Jai essaye F# dans mon projet et cest vraiment agreable pour le calcul parallele et lanalyse des donnees.', 6, 1, now()),
   ('Golang est ideal pour les applications necessitant une haute performance et une gestion efficace des ressources.', 7, 2, now()),
-  ('Le tutoriel sur Azure ma vraiment aide a comprendre comment gerer le deploiement dans le cloud.', 8, 3, now());
+  ('Le tutoriel sur Azure ma vraiment aide a comprendre comment gerer le deploiement dans le cloud.', 8, 3, now()),
+  ('Tres bon article, j apprecie la presentation des fonctionnalites de GitHub pour les projets open-source.', 3, 6, now());
