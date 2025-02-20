@@ -22,6 +22,7 @@ public class SpringSecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/api/article/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/theme/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/abonnement/subscription/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/api/commentaire/**")).permitAll()
                         .anyRequest().authenticated());
 
         return http.build();
