@@ -68,7 +68,9 @@ INSERT INTO THEMES (theme, description) VALUES
   ('Swagger', "Outil open-source permettant de documenter, concevoir et tester des API REST."),
   ('JavaScript', "Langage de programmation essentiel pour le développement web, utilisé aussi bien côté client que côté serveur (Node.js)."),
   ('SonarCloud', "Plateforme d analyse continue de la qualite du code."),
-  ('GitHub', 'Plateforme de gestion de version pour le code source, utilisee pour le controle de version, la collaboration et l hebergement de projets open-source.');
+  ('GitHub', 'Plateforme de gestion de version pour le code source, utilisee pour le controle de version, la collaboration et l hebergement de projets open-source.'),
+  ('Spring Boot', 'Framework Java permettant de créer des applications robustes et évolutives avec une configuration minimale.');
+
   
 
 
@@ -79,8 +81,9 @@ INSERT INTO ARTICLES (titre, contenu, auteur_id, theme_id, created_at) VALUES
   ('Déployer une application sur Microsoft Azure', 'Tutoriel pas à pas pour héberger une application web sur Microsoft Azure.', 3, 3, now()),
   ('Documentation d API avec Swagger', 'Swagger permet de créer des documentations interactives pour les API REST. Voici comment l’utiliser efficacement.', 4, 4, now()),
   ('Modern JavaScript : Les nouveautés ES6+', 'Découvrez les fonctionnalités modernes de JavaScript depuis ES6 et comment elles améliorent le développement web.', 5, 5, now()),
-  ('Introduction a GitHub', 'GitHub est une plateforme essentielle pour le developpement collaboratif. Découvrez ses fonctionnalites de gestion de version et de collaboration entre developpeurs.', 2, 7, now());
-
+  ('Introduction a GitHub', 'GitHub est une plateforme essentielle pour le developpement collaboratif. Découvrez ses fonctionnalites de gestion de version et de collaboration entre developpeurs.', 2, 7, now()),
+  ('Développement avec Spring Boot', 'Découvrez comment Spring Boot facilite la création d’applications Java avec des configurations simplifiées.', 6, 8, now()),
+  ('Améliorer la qualité du code avec SonarCloud', 'SonarCloud est un outil puissant pour analyser la qualité du code en continu. Il aide à détecter les bugs, vulnérabilités et mauvaises pratiques de développement.', 6, 6, now());
 INSERT INTO ABONNEMENTS (user_id, theme_id) VALUES
 (1,1),
 (1,2),
@@ -90,8 +93,6 @@ INSERT INTO ABONNEMENTS (user_id, theme_id) VALUES
 (2,4),
 (3,1),
 (3,4),
-(3,7),
-(3,5),
 (4,1),
 (4,3),
 (5,2),
