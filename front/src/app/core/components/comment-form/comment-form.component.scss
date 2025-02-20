@@ -1,0 +1,57 @@
+
+
+form{
+    .text-danger{
+        display: block;
+    }
+    .rounded-textarea {
+        display: inline;
+        margin-right: 1%;
+        width: 90%; /* Ajustez la largeur selon vos besoins */
+        height: 150px; /* Ajustez la hauteur selon vos besoins */
+        padding: 10px; /* Espace intérieur pour le texte */
+        border-radius: 15px; /* Rayon de l'arrondi des angles */
+        border: 1px solid #ccc; /* Couleur de la bordure, ajustez selon vos besoins */
+        resize: none; /* Désactive la possibilité de redimensionner le textarea */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Ombre portée optionnelle pour un effet subtil */
+        font-size: 16px; /* Taille de la police, ajustez selon vos besoins */
+        font-family: Arial, sans-serif; /* Police de caractères */
+        
+          
+    }
+    .comment_form{
+        padding-top: 20px;
+        display: flex; /* Utilisez flex pour les éléments de navigation */
+
+        button.send{
+            position: relative;
+            top: -20px;  
+            left: 20px; 
+            transform: rotate(-45deg);
+            
+            margin-left: 4%;
+            margin-top: 3%;
+            background-color:white;
+            border: none;
+            outline: none; /* Supprime l'outline qui peut aussi apparaître lors du focus */
+
+            &:hover,
+            &:visited,
+            &:focus,
+            &:active { /* Ajout de :active et :focus pour couvrir tous les cas d'interaction */
+                border: none;
+                outline: none;
+            }
+            .mat-icon{
+                cursor: pointer;
+                justify-content: flex-end; /* Alignez les éléments de navigation à droite */
+                align-items: center;
+                color: #7763C5;
+                font-size: 64px;
+                width: 100%;
+                height: auto;
+                
+            }
+        }
+    }
+}

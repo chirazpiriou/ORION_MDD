@@ -12,7 +12,7 @@ import { ArticlesService } from 'src/app/core/services/ArticlesService';
 })
 export class ArticleDetailComponent implements OnInit, OnDestroy {
   article!: Article; // Article variable to hold the article data
-  commentaire!: Commentaire[]; // Commentaire array to hold the article's comments
+  commentaires!: Commentaire[]; // Commentaire array to hold the article's comments
   article_id!: number | null; // Article ID extracted from the URL
   private destroy$: Subject<boolean> = new Subject(); // Subject to handle component destruction and unsubscribe
   error_str!: string; // Variable to hold error message
@@ -39,7 +39,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
           // When data is successfully fetched, assign it to the component's properties
           console.log('article:', articleResponse);
           this.article = articleResponse;
-          this.commentaire = articleResponse.comment; // Assign comments to the commentaire variable
+          this.commentaires = articleResponse.commentaires; // Assign comments to the commentaire variable
+          console.log('commentaires:', this.commentaires); // Ajouter un log pour vérifier les commentaires
         },
         error: error => {
           // Handle error and display a message

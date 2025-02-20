@@ -1,6 +1,9 @@
 package com.openclassrooms.mddapi.services;
 
+import javax.annotation.PostConstruct;
+
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,19 @@ public class CommentService implements ICommentService {
 
     @Autowired
     private CommentRepository commentRepository;
+
+     @PostConstruct
+    public void configureModelMapper() {
+        modelMapper.addMappings(new PropertyMap<CommentModel, CommentDTO>() {
+            @Override
+            protected void configure() {
+                // Mappe explicitement les propriétés qui ne sont pas identiques
+                map().setArticle_id(source.getArticleId());
+                map().setCreatedAt(source.getCreated_at());
+            }
+        });
+    }
+    
 
     @Override
     public CommentDTO postComment(CommentDTO commentDTO, String userEmail) {

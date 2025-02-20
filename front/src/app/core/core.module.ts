@@ -15,6 +15,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ArticleComponent } from './components/article/article.component';
 import { ArticleDetailComponent } from '../pages/article-detail/article-detail.component';
 import { ThemeComponent } from './components/theme/theme.component';
+import { CommentListComponent } from './components/comment-list/comment-list.component';
+import { CommentFormComponent } from './components/comment-form/comment-form.component';
 
 
 
@@ -26,7 +28,9 @@ import { ThemeComponent } from './components/theme/theme.component';
     ArticleCreateComponent,
     ArticleComponent,
     ArticleDetailComponent,
-    ThemeComponent
+    ThemeComponent,
+    CommentListComponent,
+    CommentFormComponent
   ],
   imports: [
     CommonModule,
@@ -43,7 +47,9 @@ import { ThemeComponent } from './components/theme/theme.component';
     ArticleListComponent,
     ArticleDetailComponent,
     ArticleCreateComponent,
-    ThemeComponent
+    ThemeComponent,
+    CommentListComponent,
+    CommentFormComponent
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }],
 })

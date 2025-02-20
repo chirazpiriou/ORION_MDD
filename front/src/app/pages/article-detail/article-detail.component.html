@@ -31,5 +31,21 @@
 
     <!-- Title for the comments section -->
     <h3 class="title_section">Commentaires</h3>
+
+    <section class="feed_comments">
+      <app-comment-list
+        *ngFor="let commentaire of commentaires"
+        [commentaire]="commentaire"
+      ></app-comment-list>
+    </section>
+    <app-comment-form 
+    [articleId] = "article.id"
+    ></app-comment-form>
+
+  </section>
+
+
+
+    
  
-</section>
+

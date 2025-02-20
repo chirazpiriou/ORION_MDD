@@ -6,7 +6,7 @@ export class Article {
     public titre: string,
     public auteur: string,
     public contenu: string,
-    public comment: Commentaire[],
+    public commentaires: Commentaire[],
     public createdAt: Date,
     public id?: number, 
   ) {}
