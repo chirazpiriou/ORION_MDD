@@ -24,7 +24,7 @@ export class ArticlesService {
     return this.httpClient.get<Article>(`${this.pathService}/detail/${id}`);
   }
 
-  public create(article: ArticleRequest): Observable<Article> {
-    return this.httpClient.post<Article>(`${this.pathService}/create`, article);
+  public create(article: ArticleRequest, userEmail: string): Observable<Article> {
+    return this.httpClient.post<Article>(`${this.pathService}/create?userEmail=${encodeURIComponent(userEmail)}`, article);
   }
 }
