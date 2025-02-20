@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { Article } from 'src/app/core/models/article.model';
-import { ArticlesService } from 'src/app/core/services/article.service';
+import { ArticlesService } from 'src/app/core/services/ArticlesService';
 
 
 @Component({
@@ -9,7 +9,7 @@ import { ArticlesService } from 'src/app/core/services/article.service';
   templateUrl: './article-list.component.html',
   styleUrls: ['./article-list.component.scss']
 })
-export class ArticleListComponent implements OnInit {
+export class ArticleListComponent implements OnInit, OnDestroy {
 
   articles!: Article[];
   articles$!:Observable<Article[]>;

@@ -14,6 +14,7 @@ import { MaterialModule } from '../material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ArticleComponent } from './components/article/article.component';
 import { ArticleDetailComponent } from '../pages/article-detail/article-detail.component';
+import { ThemeComponent } from './components/theme/theme.component';
 
 
 
@@ -24,7 +25,8 @@ import { ArticleDetailComponent } from '../pages/article-detail/article-detail.c
     ThemesListComponent,
     ArticleCreateComponent,
     ArticleComponent,
-    ArticleDetailComponent
+    ArticleDetailComponent,
+    ThemeComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +42,8 @@ import { ArticleDetailComponent } from '../pages/article-detail/article-detail.c
     MatListModule,
     ArticleListComponent,
     ArticleDetailComponent,
-    ArticleCreateComponent
+    ArticleCreateComponent,
+    ThemeComponent
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }],
 })

@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core'; 
+import { Component, OnDestroy, OnInit } from '@angular/core'; 
 import { ActivatedRoute } from '@angular/router'; 
 import { filter, map, Subject, switchMap, takeUntil, tap } from 'rxjs'; 
 import { Article } from 'src/app/core/models/article.model'; 
 import { Commentaire } from 'src/app/core/models/commentaire.model'; 
-import { ArticlesService } from 'src/app/core/services/article.service'; 
+import { ArticlesService } from 'src/app/core/services/ArticlesService'; 
 
 @Component({
   selector: 'app-article-detail', 
   templateUrl: './article-detail.component.html', 
   styleUrls: ['./article-detail.component.scss'] 
 })
-export class ArticleDetailComponent implements OnInit {
+export class ArticleDetailComponent implements OnInit, OnDestroy {
   article!: Article; // Article variable to hold the article data
   commentaire!: Commentaire[]; // Commentaire array to hold the article's comments
   article_id!: number | null; // Article ID extracted from the URL
