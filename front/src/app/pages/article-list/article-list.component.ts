@@ -11,20 +11,22 @@ import { ArticlesService } from 'src/app/core/services/ArticlesService';
 })
 export class ArticleListComponent implements OnInit, OnDestroy {
 
-  articles!: Article[];
-  articles$!:Observable<Article[]>;
-  private destroy$: Subject<boolean> = new Subject();
-  error_str!:string;
-
+  articles!: Article[]; // Array to hold the articles
+  articles$!: Observable<Article[]>; // Observable for articles
+  private destroy$: Subject<boolean> = new Subject(); // Subject to manage lifecycle
+  error_str!: string; // String to hold error messages
+  // Flag to indicate current sort order: true for ascending, false for descending
+  isAscending: boolean = true;
   constructor(private articleService:ArticlesService) { }
   
   ngOnInit(): void {
     const userEmail = 'jun.wei@tech.com'; 
+    // Fetch articles from the server
     this.articleService.all(userEmail).pipe(takeUntil(this.destroy$))
     .subscribe({
       next: (articlesFromServer: Article[]) => {
         this.articles = articlesFromServer;
-        console.log(this.articles); 
+        console.log(this.articles); // Log the fetched articles to the console
        
       },
       error: (error) => {
@@ -33,12 +35,30 @@ export class ArticleListComponent implements OnInit, OnDestroy {
           "Une erreur est survenue lors du chargement de l'article";
       },
     });
-    console.log(this.articles);
+    console.log(this.articles); // Log articles on init
     
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next(true);
-    this.destroy$.complete();
+    this.destroy$.next(true); // Notify that the component is being destroyed
+    this.destroy$.complete(); // Complete the subject to prevent memory leaks
+  }
+
+  // Method to sort articles based on the current sort order flag
+  sortArticles() {
+    if (this.isAscending) {
+      // Sort articles by creation date in ascending order
+      this.articles.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+    } else {
+      // Sort articles by creation date in descending order
+      this.articles.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    }}
+
+     // Method called when the sort order button is clicked
+  toggleSortOrder() {
+    // Toggle the sort order flag
+    this.isAscending = !this.isAscending;
+    // Apply the sort with the new order
+    this.sortArticles();
   }
 }

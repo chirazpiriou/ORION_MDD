@@ -1,5 +1,9 @@
 <div  class="sub_header">
-    <button class="violetButton create_btn"  routerLink="/article/create" routerLinkActive="active-item">Créer un article</button>    
+    <button class="violetButton create_btn"  routerLink="/article/create" routerLinkActive="active-item">Créer un article</button>
+    <!-- Single button to alternate sorting -->
+  <button class="sort_article" (click)="toggleSortOrder()">
+    Trier par  <mat-icon aria-hidden="false" aria-label="Example home icon"   fontIcon="{{ isAscending ? 'north' : 'south' }}"></mat-icon>
+  </button>    
 </div>
 
 <section class="feed feed_articles">
