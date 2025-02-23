@@ -1,9 +1,9 @@
 <div class="form_style register-bloc">
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmitForm()">
         <h3>S'inscrire</h3>
         <div class="form-group">
-            <label for="username"> Nom d’utilisateur</label>
-            <input id="username" formControlName="username" type="text" />
+            <label for="name"> Nom d’utilisateur</label>
+            <input id="name" formControlName="name" type="text" />
         </div>
         
         <div class="form-group">
