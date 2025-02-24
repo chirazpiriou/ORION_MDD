@@ -25,6 +25,7 @@ export class CommentFormComponent implements OnInit {
 
   // Output event emitter to notify parent component when a new comment is posted
   @Output() newCommentPosted = new EventEmitter<void>();
+  @Output() commentAdded = new EventEmitter<Commentaire>();
 
   constructor(
     private commentairesService: CommentairesService, // Service to interact with the backend for comments
@@ -46,14 +47,15 @@ export class CommentFormComponent implements OnInit {
 
       console.log('Article ID récupéré:', commentaire.article_id);
 
-      const userEmail = 'jun.wei@tech.com';
+     
       // Call the service to submit the comment
-      this.commentairesService.create(commentaire, userEmail)
+      this.commentairesService.create(commentaire)
         .pipe(takeUntil(this.destroy$)) // Ensures unsubscription when the component is destroyed
         .subscribe({
           next: (response) => {
             this.commentForm.reset(); // Reset the form on successful submission
             this.newCommentPosted.emit(); // Emit event to notify parent component
+            this.commentAdded.emit(commentaire);
           },
           error: (error) => {
             this.errorStr = error || 'An error occurred while posting the comment.'; // Handle any errors

@@ -17,9 +17,9 @@ export class ThemesListComponent implements OnInit, OnDestroy {
   constructor(private themesService: ThemeService) { }
 
   ngOnInit(): void {
-    const userEmail = "jun.wei@tech.com";
+    
 
-    this.themesService.getAllThemes(userEmail).subscribe({
+    this.themesService.getAllThemes().subscribe({
       next: (themes) => this.themes = themes,
       error: (error) => console.error('Erreur lors du chargement des thèmes', error)
     });
@@ -27,8 +27,7 @@ export class ThemesListComponent implements OnInit, OnDestroy {
 
 // Method for reloading themes
   reloadThemes(): void {
-    const userEmail = "jun.wei@tech.com";
-    this.themesService.getAllThemes(userEmail).subscribe({
+    this.themesService.getAllThemes().subscribe({
       next: (themes) => {
         console.log('Thèmes rechargés:', themes);
         this.themes = themes;

@@ -1,8 +1,10 @@
+
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { RegisterRequest } from 'src/app/core/interfaces/registerRequest.interface';
+import { Token } from 'src/app/core/interfaces/token.interface';
 import { AuthService } from 'src/app/core/services/AuthService';
 
 @Component({
@@ -12,7 +14,7 @@ import { AuthService } from 'src/app/core/services/AuthService';
 })
 
 
-export class RegisterComponent  {
+export class RegisterComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<boolean> = new Subject();
   errorStr: string = '';
@@ -47,12 +49,12 @@ export class RegisterComponent  {
       this.destroy$ = new Subject<boolean>();
       const registerRequest = this.registerForm.value as RegisterRequest;
       this.authService.register(registerRequest)
-      .pipe(
-        takeUntil(this.destroy$))
-      
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (response) => {
+        next: (response : Token) => {
+            console.log('Token reçu:', response.token);
             localStorage.setItem('token', response.token);
+            console.log("Navigation vers article/all");
             this.router.navigate(['article/all']);
         },
         error: (error) => {

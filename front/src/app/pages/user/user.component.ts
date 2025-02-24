@@ -16,7 +16,7 @@ export class UserComponent implements OnInit {
   errorStr: string = '';  // Variable to store error messages
   themes!: Theme[];  // Array to store themes associated with the user
   public user!:User;
-  userEmail: string = 'jun.wei@tech.com'; 
+ 
 
   constructor(private themesService: ThemeService,
     private fb: FormBuilder) { }
@@ -34,14 +34,12 @@ export class UserComponent implements OnInit {
 
     // Method to load themes associated with the user from the ThemeService
     loadThemes(): void {
-      if (this.userEmail) {  // Check if the user's email is defined
-        this.themesService.getAllUserThemes(this.userEmail).subscribe({
-          next: (themes) => this.themes = themes,  // On success, store themes in the 'themes' array
-          error: (error) => console.error('Error loading themes', error),  // Handle error in loading themes
-        });
-      } else {
-        console.error('User email is not defined.');  // Error if the email is not provided
-      }
+     
+      this.themesService.getAllUserThemes().subscribe({
+        next: (themes) => this.themes = themes,  // On success, store themes in the 'themes' array
+        error: (error) => console.error('Error loading themes', error),  // Handle error in loading themes
+      });
+      
     }
 
     // Method to handle form submission

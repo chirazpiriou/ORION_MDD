@@ -26,7 +26,7 @@ public class AuthService {
         // Encode le mot de passe avant de sauvegarder
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-        return "L'utilisateur est enregistré!";
+        return jwtUtil.generateToken(user.getEmail());
     }
 
     public String login(UserModel user) {

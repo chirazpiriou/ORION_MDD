@@ -37,7 +37,7 @@ export class ThemeComponent {
      */
     changeSubscriptionStatus(themeId: number | undefined): void {
       if (!this.theme?.id) return; // Ensure the theme has a valid ID before proceeding
-      const userEmail = "jun.wei@tech.com";
+  
       /**
        * Using `take(1)` ensures that the Observable completes automatically 
        * after receiving the first response from the service. 
@@ -47,7 +47,7 @@ export class ThemeComponent {
        * Without `take(1)`, the subscription would remain active, 
        * potentially causing unwanted behavior if the component is destroyed.
        */
-      this.abonnementService.changeSubscriptionStatus(this.theme.id, userEmail).pipe(take(1)).subscribe({
+      this.abonnementService.changeSubscriptionStatus(this.theme.id).pipe(take(1)).subscribe({
         next: (response) => {
           console.log(response); 
           this.theme.isSubscribed = !this.theme.isSubscribed; // change the subscription status

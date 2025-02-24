@@ -4,6 +4,7 @@ import { filter, map, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { Article } from 'src/app/core/models/article.model'; 
 import { Commentaire } from 'src/app/core/models/commentaire.model'; 
 import { ArticlesService } from 'src/app/core/services/ArticlesService'; 
+import { CommentairesService } from 'src/app/core/services/CommentaireService';
 
 @Component({
   selector: 'app-article-detail', 
@@ -17,7 +18,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   private destroy$: Subject<boolean> = new Subject(); // Subject to handle component destruction and unsubscribe
   error_str!: string; // Variable to hold error message
 
-  constructor(private route: ActivatedRoute, private articleService: ArticlesService) { }
+  constructor(private route: ActivatedRoute, private articleService: ArticlesService ) { }
   
   ngOnInit(): void {
     // Using ActivatedRoute to extract the article ID from the URL and fetch the article details
@@ -49,6 +50,16 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
         }
       });
   }
+
+  addCommentToList(newComment: Commentaire): void {
+    if (this.commentaires) {
+      this.commentaires = [...this.commentaires, newComment]; // Ajouter le commentaire sans recharger la page
+    } else {
+      this.commentaires = [newComment]; // Initialiser si la liste est vide
+    }
+  }
+
+ 
 
   ngOnDestroy(): void {
     // Clean up the subscriptions when the component is destroyed to avoid memory leaks

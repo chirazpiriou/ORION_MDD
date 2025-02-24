@@ -40,6 +40,8 @@
     </section>
     <app-comment-form 
     [articleId] = "article.id"
+    (commentAdded)="addCommentToList($event)"
+ 
     ></app-comment-form>
 
   </section>

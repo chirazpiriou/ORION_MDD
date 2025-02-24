@@ -1,7 +1,8 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Theme } from "../models/theme.model";
 import { Observable } from "rxjs";
+import { AuthService } from "./AuthService";
 
 
 
@@ -11,16 +12,23 @@ import { Observable } from "rxjs";
 export class ThemeService {
   private readonly apiUrl = 'http://localhost:8080/api/theme';
 
-constructor(private http: HttpClient) {}
+constructor(private http: HttpClient, private authService: AuthService) {}
 
-getAllThemes(userEmail: string): Observable<Theme[]> {
-  // Fetch all themes from the API
-  return this.http.get<Theme[]>(`${this.apiUrl}/all?userEmail=${encodeURIComponent(userEmail)}`);
+private getAuthHeaders(): HttpHeaders {
+  const token = this.authService.getToken();
+  if (!token) {
+    throw new Error('Token manquant');
+  }
+  return new HttpHeaders({ Authorization: `Bearer ${token}` });
 }
 
-getAllUserThemes(userEmail: string): Observable<Theme[]> {
-  // Fetch themes for a specific user based on their email
-  return this.http.get<Theme[]>(`${this.apiUrl}/user?userEmail=${encodeURIComponent(userEmail)}`);
+getAllThemes(): Observable<Theme[]> {
+  // Si cette route est aussi sécurisée, ajouter l'en-tête
+  return this.http.get<Theme[]>(`${this.apiUrl}/all`, { headers: this.getAuthHeaders() });
+}
+
+getAllUserThemes(): Observable<Theme[]> {
+  return this.http.get<Theme[]>(`${this.apiUrl}/user`, { headers: this.getAuthHeaders() });
 }
 
 }

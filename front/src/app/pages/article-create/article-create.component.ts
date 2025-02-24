@@ -47,8 +47,8 @@ export class ArticleCreateComponent implements OnInit, OnDestroy {
    * Loads available themes from the service
    */
   private loadThemes(): void {
-    const userEmail = "jun.wei@tech.com";
-    this.themesService.getAllThemes(userEmail).subscribe({
+    
+    this.themesService.getAllThemes().subscribe({
       next: (themes) => (this.themes = themes),
       error: (error) => console.error('Error loading themes:', error)
     });
@@ -61,8 +61,8 @@ export class ArticleCreateComponent implements OnInit, OnDestroy {
     if (this.articleForm.invalid) return; // Prevent submission if the form is invalid
 
     const articleRequest: ArticleRequest = this.articleForm.value;
-    const userEmail = 'jun.wei@tech.com';
-    this.articlesService.create(articleRequest , userEmail)
+   
+    this.articlesService.create(articleRequest )
       .pipe(takeUntil(this.destroy$)) // Unsubscribe when the component is destroyed
       .subscribe({
         next: () => {

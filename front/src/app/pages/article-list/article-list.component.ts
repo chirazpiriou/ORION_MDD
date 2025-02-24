@@ -20,11 +20,12 @@ export class ArticleListComponent implements OnInit, OnDestroy {
   constructor(private articleService:ArticlesService) { }
   
   ngOnInit(): void {
-    const userEmail = 'jun.wei@tech.com'; 
+    
     // Fetch articles from the server
-    this.articleService.all(userEmail).pipe(takeUntil(this.destroy$))
+    this.articleService.all().pipe(takeUntil(this.destroy$))
     .subscribe({
       next: (articlesFromServer: Article[]) => {
+        console.log("Articles reçus depuis l'API :", articlesFromServer);
         this.articles = articlesFromServer;
         console.log(this.articles); // Log the fetched articles to the console
        
