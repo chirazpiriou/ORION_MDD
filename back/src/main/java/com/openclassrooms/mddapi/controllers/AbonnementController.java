@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,9 +27,9 @@ public class AbonnementController {
      * @return A response containing the result of the subscription change.
      */
     @GetMapping("/subscription/{id}")
-    public ResponseEntity<String> changeSubscriptionStatus(
-            @PathVariable("id") Integer themeId,
-            @RequestParam("userEmail") String userEmail) {
+    public ResponseEntity<String> changeSubscriptionStatus(@PathVariable("id") Integer themeId,
+            Authentication authentication) {
+        String userEmail = authentication.getName();
         try {
             // Call the service method to change the subscription status.
             String responseMessage = abonnementService.changeSubscriptionStatus(themeId, userEmail);

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.function.Function;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -39,12 +40,17 @@ public class JwtUtil {
     // Generic method to extract any claim from a JWT token based on the provided
     // claimsResolver.
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = Jwts.parserBuilder() // Build a JWT parser
-                .setSigningKey(SECRET_KEY) // Set the signing key for validation
-                .build()
-                .parseClaimsJws(token) // Parse the JWT token
-                .getBody(); // Get the body of the JWT containing the claims
-        return claimsResolver.apply(claims); // Apply the provided claimsResolver to extract the desired claim
+        try {
+            final Claims claims = Jwts.parserBuilder() // Build a JWT parser
+                    .setSigningKey(SECRET_KEY) // Set the signing key for validation
+                    .build()
+                    .parseClaimsJws(token) // Parse the JWT token
+                    .getBody(); // Get the body of the JWT containing the claims
+            return claimsResolver.apply(claims); // Apply the provided claimsResolver to extract the desired claim
+        } catch (JwtException | IllegalArgumentException e) {
+            // Log the exception or handle it as needed
+            throw new RuntimeException("JWT Token is invalid or expired", e);
+        }
     }
 
     // Method to check if a token is valid by ensuring the username matches and the
