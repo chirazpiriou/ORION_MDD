@@ -45,5 +45,12 @@ export class AuthService {
       .get<User>(`${this.pathService}/profile`);
   }
 
+  public update(user: User): Observable<string> {
+    return this.httpClient
+      .put<string>(`${this.pathService}/update`, user)
+      .pipe(tap((response) => console.log('Update response: ', response)));
+  }
+
+
  
 }

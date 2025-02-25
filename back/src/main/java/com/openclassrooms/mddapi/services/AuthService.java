@@ -37,4 +37,14 @@ public class AuthService {
         // Génère et retourne un JWT après l'authentification réussie
         return jwtUtil.generateToken(user.getEmail());
     }
+
+    public String updateUserDetails(Integer userId, String newName, String newEmail) {
+
+        UserModel user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+        user.setName(newName);
+        user.setEmail(newEmail);
+        userRepository.save(user);
+        return jwtUtil.generateToken(user.getEmail());
+    }
 }

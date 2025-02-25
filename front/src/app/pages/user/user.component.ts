@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { Theme } from 'src/app/core/models/theme.model';
 import { User } from 'src/app/core/models/user.model';
+import { AuthService } from 'src/app/core/services/AuthService';
 import { ThemeService } from 'src/app/core/services/ThemeService';
 
 @Component({
@@ -19,7 +20,7 @@ export class UserComponent implements OnInit {
  
 
   constructor(private themesService: ThemeService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder, private authService: AuthService) { }
 
   ngOnInit(): void {
     // Password pattern to ensure strong passwords (at least one lowercase, one uppercase, one digit, and one special character)
@@ -42,14 +43,23 @@ export class UserComponent implements OnInit {
       
     }
 
-    // Method to handle form submission
-  onSubmit(): void {
-    if (this.userForm.valid) {  // Check if the form is valid
-      const userRequest = this.userForm.value;  // Extract form values as a plain object
-      // Logic to handle form submission (currently just logging data)
-      console.log('Form submitted', userRequest);  // Logging form data for now
-    }
-  }
+    onSubmit() {
+      if (this.userForm.valid) {  
+      this.destroy$ = new Subject<boolean>();
+      const user = this.userForm.value as User;
+      this.authService.update(user)
+      .pipe(
+        takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+        },
+        error: (error) => {
+          this.errorStr =
+            error || '..................Une erreur est survenue lors de la connexion.';
+        },
+      });
+    }}
+  
 
   // Cleanup logic when the component is destroyed (cancel any ongoing subscriptions)
   ngOnDestroy(): void {
