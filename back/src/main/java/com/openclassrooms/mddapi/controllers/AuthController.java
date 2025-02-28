@@ -35,17 +35,34 @@ public class AuthController {
                 .body(Map.of("token", token));
     }
 
-  
-
     @PutMapping("/update")
-    
+
     public ResponseEntity<?> updateUser(@RequestBody UserModel updatedUser, Authentication authentication) {
-    if (authentication == null) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(Map.of("error", "Utilisateur non authentifié"));
+        if (authentication == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "Utilisateur non authentifié"));
+        }
+        String currentUserEmail = authentication.getName();
+        Map<String, String> response = authService.updateUser(currentUserEmail, updatedUser);
+        return ResponseEntity.ok(response);
     }
-    String currentUserEmail = authentication.getName();
-    authService.updateUser(currentUserEmail, updatedUser);
-    return ResponseEntity.ok(Map.of("message", "Utilisateur mis à jour avec succès"));
-}
+
+    @GetMapping("/profile")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> getProfile(Authentication authentication) {
+        if (authentication == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "Utilisateur non authentifié"));
+        }
+
+        String email = authentication.getName();
+        UserModel user = authService.getUserByEmail(email);
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("error", "Utilisateur non trouvé"));
+        }
+
+        return ResponseEntity.ok(user);
+    }
 }

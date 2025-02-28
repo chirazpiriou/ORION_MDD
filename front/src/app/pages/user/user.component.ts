@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { Theme } from 'src/app/core/models/theme.model';
 import { User } from 'src/app/core/models/user.model';
@@ -20,7 +21,7 @@ export class UserComponent implements OnInit {
  
 
   constructor(private themesService: ThemeService,
-    private fb: FormBuilder, private authService: AuthService) { }
+    private fb: FormBuilder, private authService: AuthService, private router: Router  ) { }
 
   ngOnInit(): void {
     // Password pattern to ensure strong passwords (at least one lowercase, one uppercase, one digit, and one special character)
@@ -43,23 +44,32 @@ export class UserComponent implements OnInit {
       
     }
 
-    onSubmit() {
-      if (this.userForm.valid) {  
-      this.destroy$ = new Subject<boolean>();
-      const user = this.userForm.value as User;
-      this.authService.update(user)
-      .pipe(
-        takeUntil(this.destroy$))
-      .subscribe({
-        next: (response) => {
-        },
-        error: (error) => {
-          this.errorStr =
-            error || '..................Une erreur est survenue lors de la connexion.';
-        },
-      });
-    }}
-  
+    onSubmit(): void {
+      if (this.userForm.valid) {
+        const user: User = this.userForm.value;
+    
+        this.authService.update(user)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: () => {
+              console.log('Utilisateur mis à jour avec succès');
+              this.authService.get_profile().subscribe(profile => { 
+                this.user = profile; // Recharger les infos utilisateur
+                this.loadThemes(); // Recharger les abonnements
+              });
+            },
+            error: (error) => {
+              this.errorStr = error || 'Une erreur est survenue lors de la mise à jour de votre profil.';
+            }
+          });
+      }
+    }
+
+    logOut(): void {
+      this.authService.logOut();
+      // Rediriger l'utilisateur vers la page de connexion ou d'accueil
+      this.router.navigate(['/login']);
+    }
 
   // Cleanup logic when the component is destroyed (cancel any ongoing subscriptions)
   ngOnDestroy(): void {

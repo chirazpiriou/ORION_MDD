@@ -41,16 +41,29 @@ export class AuthService {
     this.router.navigate(['']);
   }
   public get_profile(): Observable<User> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.httpClient
-      .get<User>(`${this.pathService}/profile`);
+      .get<User>(`${this.pathService}/profile`, { headers });
   }
 
-  public update(user: User): Observable<string> {
-    return this.httpClient
-      .put<string>(`${this.pathService}/update`, user)
-      .pipe(tap((response) => console.log('Update response: ', response)));
+  
+  public update(user: User): Observable<any> {
+    const token = this.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  
+    return this.httpClient.put<{ message: string, token?: string }>(
+      `${this.pathService}/update`, user, { headers }
+    ).pipe(
+      tap(response => {
+        if (response.token) {
+          console.log('Nouveau token:', response.token);
+          localStorage.setItem('token', response.token); // Mettre à jour le token
+        }
+      })
+    );
   }
-
+  
 
  
 }

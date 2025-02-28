@@ -4,6 +4,8 @@ import com.openclassrooms.mddapi.configuration.JwtUtil;
 import com.openclassrooms.mddapi.models.UserModel;
 import com.openclassrooms.mddapi.repositories.UserRepository;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,7 +40,7 @@ public class AuthService {
         return jwtUtil.generateToken(user.getEmail());
     }
 
-    public void updateUser(String email, UserModel updatedUser) {
+    public Map<String, String> updateUser(String email, UserModel updatedUser) {
         UserModel user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
 
@@ -50,5 +52,12 @@ public class AuthService {
         }
 
         userRepository.save(user);
+        String newToken = jwtUtil.generateToken(user.getEmail());
+
+        return Map.of("message", "Utilisateur mis à jour avec succès", "token", newToken);
+    }
+
+    public UserModel getUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
     }
 }
