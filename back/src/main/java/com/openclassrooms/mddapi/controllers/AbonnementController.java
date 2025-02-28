@@ -29,6 +29,7 @@ public class AbonnementController {
     @GetMapping("/subscription/{id}")
     public ResponseEntity<String> changeSubscriptionStatus(@PathVariable("id") Integer themeId,
             Authentication authentication) {
+               
         String userEmail = authentication.getName();
         try {
             // Call the service method to change the subscription status.

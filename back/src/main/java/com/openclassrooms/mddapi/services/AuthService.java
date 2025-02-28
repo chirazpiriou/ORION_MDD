@@ -38,13 +38,17 @@ public class AuthService {
         return jwtUtil.generateToken(user.getEmail());
     }
 
-    public String updateUserDetails(Integer userId, String newName, String newEmail) {
-
-        UserModel user = userRepository.findById(userId)
+    public void updateUser(String email, UserModel updatedUser) {
+        UserModel user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
-        user.setName(newName);
-        user.setEmail(newEmail);
+
+        if (updatedUser.getName() != null) {
+            user.setName(updatedUser.getName());
+        }
+        if (updatedUser.getEmail() != null) {
+            user.setEmail(updatedUser.getEmail());
+        }
+
         userRepository.save(user);
-        return jwtUtil.generateToken(user.getEmail());
     }
 }

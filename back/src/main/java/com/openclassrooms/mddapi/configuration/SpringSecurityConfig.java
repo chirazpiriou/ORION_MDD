@@ -30,8 +30,12 @@ public class SpringSecurityConfig {
                                 .sessionManagement(session -> session
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 .authorizeHttpRequests(auth -> auth
-                                                .requestMatchers(new AntPathRequestMatcher("/api/auth/**")).permitAll()
-                                                .antMatchers("/api/auth/update").authenticated()
+                                                .requestMatchers(new AntPathRequestMatcher("/api/auth/login", "POST"))
+                                                .permitAll()
+                                                .requestMatchers(
+                                                                new AntPathRequestMatcher("/api/auth/register", "POST"))
+                                                .permitAll()
+                                                .requestMatchers(new AntPathRequestMatcher("/api/auth/update", "PUT")).authenticated()
                                                 .anyRequest().authenticated())
                                 .addFilterBefore(jwtAuthenticationFilter,
                                                 UsernamePasswordAuthenticationFilter.class);

@@ -24,9 +24,8 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found."));
     }
 
-    // How to retrieve a user by ID
-    public UserModel getUserById(Integer id) {
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found."));
-    }
+   
+
+    
 
 }
