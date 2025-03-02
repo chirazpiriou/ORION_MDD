@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { Article } from '../models/article.model';
@@ -17,27 +17,19 @@ export class ArticlesService {
     private authService: AuthService) {}
 
   public all(): Observable<Article[]> {
-    const token = this.authService.getToken();
-    if (!token) {
-      this.authService.logOut();
-      // Retourner une erreur ou un Observable vide selon ta logique
-    }
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+   
+
     const url = `${this.pathService}/all`;
-    return this.httpClient.get<Article[]>(url, { headers }).pipe(
+    return this.httpClient.get<Article[]>(url).pipe(
       tap((response) => console.log('Get response: ', response))
     );
   }
   
 
   public detail(id: number): Observable<Article> {
-    const token = this.authService.getToken();
-    if (!token) {
-      this.authService.logOut();
-      return throwError(() => new Error('Unauthorized: No valid token'));
-    }
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-    return this.httpClient.get<Article>(`${this.pathService}/detail/${id}`, { headers }).pipe(
+   
+
+    return this.httpClient.get<Article>(`${this.pathService}/detail/${id}`).pipe(
       catchError(error => {
         console.error(`Error fetching article with ID ${id}:`, error);
         return throwError(() => error);
@@ -46,12 +38,8 @@ export class ArticlesService {
   }
 
   public create(article: ArticleRequest): Observable<Article> {
-    const headers = this.getAuthHeaders();
-    if (!headers) {
-      return throwError(() => new Error('Unauthorized: No valid token'));
-    }
-
-    return this.httpClient.post<Article>(`${this.pathService}/create`, article, { headers }).pipe(
+   
+    return this.httpClient.post<Article>(`${this.pathService}/create`, article).pipe(
       catchError(error => {
         console.error('Error creating article:', error);
         return throwError(() => error);
@@ -59,12 +47,5 @@ export class ArticlesService {
     );
   }
 
-  private getAuthHeaders(): HttpHeaders | null {
-    const token = this.authService.getToken(); // Si AuthService a une méthode `getToken()`, utilise-la
-    if (!token) {
-      this.authService.logOut();
-      return null;
-    }
-    return new HttpHeaders({ Authorization: `Bearer ${token}` });
-  }
+ 
 }

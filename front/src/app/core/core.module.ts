@@ -4,7 +4,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { ArticleListComponent } from '../pages/article-list/article-list.component';
 import { ThemesListComponent } from '../pages/themes-list/themes-list.component';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -17,6 +17,7 @@ import { ArticleDetailComponent } from '../pages/article-detail/article-detail.c
 import { ThemeComponent } from './components/theme/theme.component';
 import { CommentListComponent } from './components/comment-list/comment-list.component';
 import { CommentFormComponent } from './components/comment-form/comment-form.component';
+import { AuthInterceptor } from '../interceptors/AuthInterceptor';
 
 
 
@@ -51,7 +52,7 @@ import { CommentFormComponent } from './components/comment-form/comment-form.com
     CommentListComponent,
     CommentFormComponent
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }],
+  providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
 })
 export class CoreModule { 
   constructor() {

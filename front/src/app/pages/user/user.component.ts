@@ -32,6 +32,15 @@ export class UserComponent implements OnInit {
       password: ['', [Validators.minLength(8), Validators.pattern(passwordPattern)]],  // Password field with validation rules
     });
     this.loadThemes();  // Loading themes on component initialization
+    this.authService.get_profile().subscribe(profile => { 
+      console.log(profile);
+      this.user = profile; // Récupérer le profil utilisateur
+      console.log(this.user.name);
+      this.userForm.patchValue({  // Mettre à jour le formulaire avec les données de l'utilisateur
+        name: this.user.name,
+        email: this.user.email
+      });
+    });
   }
 
     // Method to load themes associated with the user from the ThemeService
