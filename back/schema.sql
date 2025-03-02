@@ -51,14 +51,14 @@ ALTER TABLE `ABONNEMENTS` ADD FOREIGN KEY (`user_id`) REFERENCES `USERS` (`id`);
 ALTER TABLE `ABONNEMENTS` ADD FOREIGN KEY (`theme_id`) REFERENCES `THEMES` (`id`);
 
 INSERT INTO USERS (email, name, password, created_at) VALUES
-  ('ali.hassan@gmail.com', 'Ali Hassan', '$2a$10$W/VUlTXPwmqId36XvGbawuRxZbltohkQDUBVsaElaJYrEaTpp6h9e', now()),
-  ('priya.sharma@tech.com', 'Priya Sharma', '$2a$10$W/VUlTXPwmqId36XvGbawuRxZbltohkQDUBVsaElaJYrEaTpp6h9e', now()),
-  ('jun.wei@tech.com', 'Jun Wei', '$2a$10$W/VUlTXPwmqId36XvGbawuRxZbltohkQDUBVsaElaJYrEaTpp6h9e', now()),
-  ('mohamed.amin@tech.com', 'Mohamed Amin', '$2a$10$W/VUlTXPwmqId36XvGbawuRxZbltohkQDUBVsaElaJYrEaTpp6h9e', now()),
-  ('aisha.farouk@web.com', 'Aisha Farouk', '$2a$10$W/VUlTXPwmqId36XvGbawuRxZbltohkQDUBVsaElaJYrEaTpp6h9e', now()),
-  ('vijay.kumar@web.com', 'Vijay Kumar', '$2a$10$W/VUlTXPwmqId36XvGbawuRxZbltohkQDUBVsaElaJYrEaTpp6h9e', now()),
-  ('chen.li@web.com', 'Chen Li', '$2a$10$W/VUlTXPwmqId36XvGbawuRxZbltohkQDUBVsaElaJYrEaTpp6h9e', now()),
-  ('yasmin.nasser@tech.com', 'Yasmin Nasser', '$2a$10$W/VUlTXPwmqId36XvGbawuRxZbltohkQDUBVsaElaJYrEaTpp6h9e', now());
+  ('ali.hassan@gmail.com', 'AliHassan', '$2a$10$W/VUlTXPwmqId36XvGbawuRxZbltohkQDUBVsaElaJYrEaTpp6h9e', now()),
+  ('priya.sharma@tech.com', 'PriyaSharma', '$2a$10$W/VUlTXPwmqId36XvGbawuRxZbltohkQDUBVsaElaJYrEaTpp6h9e', now()),
+  ('jun.wei@tech.com', 'JunWei', '$2a$10$W/VUlTXPwmqId36XvGbawuRxZbltohkQDUBVsaElaJYrEaTpp6h9e', now()),
+  ('mohamed.amin@tech.com', 'MohamedAmin', '$2a$10$W/VUlTXPwmqId36XvGbawuRxZbltohkQDUBVsaElaJYrEaTpp6h9e', now()),
+  ('aisha.farouk@web.com', 'AishaFarouk', '$2a$10$W/VUlTXPwmqId36XvGbawuRxZbltohkQDUBVsaElaJYrEaTpp6h9e', now()),
+  ('vijay.kumar@web.com', 'VijayKumar', '$2a$10$W/VUlTXPwmqId36XvGbawuRxZbltohkQDUBVsaElaJYrEaTpp6h9e', now()),
+  ('chen.li@web.com', 'ChenLi', '$2a$10$W/VUlTXPwmqId36XvGbawuRxZbltohkQDUBVsaElaJYrEaTpp6h9e', now()),
+  ('yasmin.nasser@tech.com', 'YasminNasser', '$2a$10$W/VUlTXPwmqId36XvGbawuRxZbltohkQDUBVsaElaJYrEaTpp6h9e', now());
 
 
 INSERT INTO THEMES (theme, description) VALUES

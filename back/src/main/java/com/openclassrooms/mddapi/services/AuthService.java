@@ -5,6 +5,7 @@ import com.openclassrooms.mddapi.models.UserModel;
 import com.openclassrooms.mddapi.repositories.UserRepository;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,10 +32,14 @@ public class AuthService {
         return jwtUtil.generateToken(user.getEmail());
     }
 
-    public String login(UserModel user) {
+    public String login(String identifier, String password) {
+        UserModel user = userRepository.findByEmail(identifier)
+        .orElseGet(() -> userRepository.findByName(identifier)
+        .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé")));
+
         // Authentifie l'utilisateur
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+                new UsernamePasswordAuthenticationToken(identifier, password));
 
         // Génère et retourne un JWT après l'authentification réussie
         return jwtUtil.generateToken(user.getEmail());

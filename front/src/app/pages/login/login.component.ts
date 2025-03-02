@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     
       this.loginForm = this.fb.group({
        
-        email:['', [Validators.required, Validators.email]],
+        identifier:['', [Validators.required]],
         password: ['', [Validators.required]],
         
       });
@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     onSubmitForm():void {
       if (this.loginForm.valid) {  // Vérifie si le formulaire est valide
       this.destroy$ = new Subject<boolean>();
-      const loginRequest = this.loginForm.value as LoginRequest;
+      const loginRequest = this.loginForm.value;
       
       this.authService.login(loginRequest)
       .pipe(
@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       
       .subscribe({
         next: (response) => {
-          tap((response) => console.log('[LoginComponent] Login response: ', response)),
+            console.log('[LoginComponent] Login response: ', response),
             localStorage.setItem('token', response.token);
             this.router.navigate(['article/all']);
         },

@@ -28,8 +28,14 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserModel user) {
-        String token = authService.login(user);
+    public ResponseEntity<?> login(@RequestBody Map<String, String> loginRequest) {
+        String identifier = loginRequest.get("identifier"); // Peut être un email ou un username
+        String password = loginRequest.get("password");
+
+        if (identifier == null || password == null) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Données manquantes"));
+        }
+        String token = authService.login(identifier, password);
         return ResponseEntity.ok()
                 .header("Content-Type", "application/json")
                 .body(Map.of("token", token));

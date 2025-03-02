@@ -16,16 +16,16 @@ public class UserService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByEmail(username).map(user -> new org.springframework.security.core.userdetails.User(
+    public UserDetails loadUserByUsername(String identifier) throws UsernameNotFoundException {
+
+        UserModel user = userRepository.findByEmail(identifier)
+                .orElseGet(() -> userRepository.findByName(identifier)
+                        .orElseThrow(() -> new UsernameNotFoundException("User not found.")));
+
+        return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
                 user.getPassword(),
-                Collections.emptyList()))
-                .orElseThrow(() -> new UsernameNotFoundException("User not found."));
+                Collections.emptyList());
     }
-
-   
-
-    
 
 }
