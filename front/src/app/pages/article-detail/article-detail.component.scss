@@ -1,22 +1,47 @@
-
-.title_section{
-    margin-top: 2%;
-}
-.article-bloc{
-    width: 80%;
-    margin-left: 10%;
+.title_section {
+    margin-top: 2%; /* Keeps the title section margin consistent */
+    
+    /* Media query for smaller screens */
+    @media (max-width: 768px) {
+      margin-top: 5%; /* Adds more margin on smaller screens */
+    }
+  }
+  
+  .article-bloc {
+    width: 80%; /* Sets the initial width of the article */
+    margin-left: 10%; /* Centers the article block */
     padding-bottom: 20px;
-    .second_line{
-        display: block;
-        margin-top: 10px;
-        margin-bottom: 20px;
-        padding-top: 10px;
-        .article_date, .article_auteur, .article_theme {
-            width: 20%; 
-            padding: 0;
-            margin-right: 2%;
-        }
+  
+    /* Media query for smaller screens */
+    @media (max-width: 768px) {
+      width: 90%; /* Increases width on smaller screens */
+      margin-left: 5%; /* Reduces left margin for better centering */
+      padding-bottom: 10px; /* Reduces padding on smaller screens */
     }
   
-    
-}
+    .second_line {
+      display: block;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      padding-top: 10px;
+      
+      /* Media query for smaller screens */
+      @media (max-width: 768px) {
+        margin-bottom: 10px; /* Reduces bottom margin on small screens */
+      }
+  
+      .article_date, .article_auteur, .article_theme {
+        width: 20%; /* Sets a fixed width for each element */
+        padding: 0;
+        margin-right: 2%;
+        
+        /* Media query for smaller screens */
+        @media (max-width: 768px) {
+          width: 100%; /* Stacks elements vertically on smaller screens */
+          margin-right: 0; /* Removes right margin when stacked */
+          margin-bottom: 10px; /* Adds spacing between stacked items */
+        }
+      }
+    }
+  }
+  

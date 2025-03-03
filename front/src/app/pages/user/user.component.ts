@@ -36,7 +36,7 @@ export class UserComponent implements OnInit {
       console.log(profile);
       this.user = profile; // Récupérer le profil utilisateur
       console.log(this.user.name);
-      this.userForm.patchValue({  // Mettre à jour le formulaire avec les données de l'utilisateur
+      this.userForm.patchValue({ 
         name: this.user.name,
         email: this.user.email
       });

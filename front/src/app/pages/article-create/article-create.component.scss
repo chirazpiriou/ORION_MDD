@@ -2,15 +2,15 @@
 
 .article_creation{
     display: flex;
-    flex-direction:column;
-    align-items:center;
+    flex-direction: column;
+    align-items: center;
     padding: 2px;
     min-width: 600px;
     width: 100%;
 
     form{
         h3{
-            font-size:x-large;
+            font-size: x-large;
             font-weight: bold;
             text-align: center;
             margin-bottom: 55px;
@@ -26,29 +26,27 @@
                 padding: 10px;
                 border: 2px solid #7763C5;
                 border-radius: 4px;
-                font-size: 16px; /* Defines the font size for the text */
-                font-family: Arial, sans-serif; /* Specifies the font style */
+                font-size: 16px;
+                font-family: Arial, sans-serif;
                 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
                 color: #808080;
                 box-sizing: border-box;
             }
             .textarea {
-                width: 100%; /* Ensures the textarea takes the full width of its container */
-                height: 250px; /* Sets a fixed height for the textarea */
-                padding: 10px; /* Adds inner spacing for better readability */
-                font-size: 16px; /* Defines the font size for the text */
-                font-family: Arial, sans-serif; /* Specifies the font style */
-
-                border: 2px solid #7763C5; /* Adds a subtle border for structure */
-                border-radius: 15px; /* Rounds the corners for a softer look */
-                resize: none; /* Disables manual resizing of the textarea */
+                width: 100%;
+                height: 250px;
+                padding: 10px;
+                font-size: 16px;
+                font-family: Arial, sans-serif;
+                border: 2px solid #7763C5;
+                border-radius: 15px;
+                resize: none;
                 color: #808080;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Adds a slight shadow for depth */
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
                 box-sizing: border-box;
-
             }
         }
-        
+
         button {
             padding: 12px 40px;
             border: none;
@@ -57,15 +55,76 @@
             cursor: pointer;
             margin-left: 30%;
           
-            
             &.violetButton {
-                
                 background-color: #7763C5;
                 color: white;
                 &:hover {
                     background-color: #6653a5;
                 }
             }
+        }
+    }
+    
+    @media (max-width: 1200px) {
+        min-width: 500px;
+        .input_rectangle {
+            input, select, .textarea {
+                font-size: 14px;
+            }
+        }
+        button {
+            padding: 12px 30px;
+            margin-left: 25%;
+        }
+    }
+
+    @media (max-width: 992px) {
+        min-width: 400px;
+        form {
+            h3 {
+                font-size: large;
+            }
+        }
+        .input_rectangle {
+            input, select, .textarea {
+                font-size: 14px;
+                padding: 8px;
+            }
+        }
+        button {
+            padding: 10px 25px;
+            margin-left: 20%;
+        }
+    }
+
+    @media (max-width: 768px) {
+        min-width: 100%;
+        padding: 15px;
+        .input_rectangle {
+            input, select, .textarea {
+                font-size: 14px;
+                padding: 8px;
+            }
+        }
+        button {
+            padding: 10px 20px;
+            margin-left: 15%;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .article_creation {
+            min-width: 100%;
+        }
+        .input_rectangle {
+            input, select, .textarea {
+                font-size: 14px;
+                padding: 6px;
+            }
+        }
+        button {
+            padding: 8px 20px;
+            margin-left: 10%;
         }
     }
 }

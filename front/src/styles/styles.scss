@@ -58,17 +58,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     grid-template-columns: repeat(2, 1fr); 
     grid-gap: 10px; 
     padding: 20px; 
-  
+    @media (orientation: portrait) {
+      grid-template-columns: 1fr; 
+      padding-top: 20px;
+    }
+    
    
   }
+  app-theme, app-article {
+    width: 100%; 
+  }
 
-
-
-
-    
- 
-    
-    
-  
   }
 }
