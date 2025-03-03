@@ -25,10 +25,13 @@ public class ThemeService implements IThemeService {
 
     @Autowired
     private UserRepository userRepository;
+    
     @Autowired
     private ModelMapper modelMapper;
+    
     @Autowired
     private ThemeRepository themeRepository;
+    
     @Autowired
     private AbonnementRepository abonnementRepository;
 
@@ -38,9 +41,9 @@ public class ThemeService implements IThemeService {
      * @param userEmail The email of the authenticated user.
      * @return A list of subscribed themes.
      */
-
     @Override
     public List<ThemeDTO> getAllUserThemes(String userEmail) {
+        // Retrieve the user by email, throw an exception if not found.
         UserModel user = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + userEmail));
 
@@ -72,6 +75,7 @@ public class ThemeService implements IThemeService {
      */
     @Override
     public List<ThemeDTO> getAllThemes(String userEmail) {
+        // Retrieve the user by email, throw an exception if not found.
         UserModel user = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + userEmail));
 
@@ -93,5 +97,4 @@ public class ThemeService implements IThemeService {
                 })
                 .collect(Collectors.toList());
     }
-
 }

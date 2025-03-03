@@ -8,44 +8,54 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
-
 import com.openclassrooms.mddapi.services.Interfaces.IAbonnementService;
 
-@RestController
-@RequestMapping("/api/abonnement") // The base URL for abonnement-related operations.
+/**
+ * AbonnementController handles subscription-related API operations such as
+ * changing
+ * the subscription status for a user to a specific theme.
+ */
+@RestController // This annotation defines the class as a REST controller in Spring, returning
+                // JSON responses.
+@RequestMapping("/api/abonnement") // Specifies the base URL for abonnement-related API endpoints (e.g.,
+                                   // /api/abonnement/subscription/{id}).
 public class AbonnementController {
+
     @Autowired
-    private IAbonnementService abonnementService; // Injecting the AbonnementService to handle the logic.
+    private IAbonnementService abonnementService; // Injects the service to handle subscription logic.
 
     /**
      * Endpoint to change the subscription status of a user to a specific theme.
-     *
-     * @param themeId   The ID of the theme.
-     * @param userEmail The email of the user.
-     * @return A response containing the result of the subscription change.
+     * 
+     * @param themeId        The ID of the theme to subscribe/unsubscribe to.
+     * @param authentication The authentication object to get the currently
+     *                       authenticated user's email.
+     * @return A response containing a success or error message.
      */
-    @GetMapping("/subscription/{id}")
+    @GetMapping("/subscription/{id}") // Maps GET requests to change the subscription status for a given theme ID.
     public ResponseEntity<String> changeSubscriptionStatus(@PathVariable("id") Integer themeId,
             Authentication authentication) {
-               
+
+        // Retrieves the currently authenticated user's email.
         String userEmail = authentication.getName();
+
         try {
-            // Call the service method to change the subscription status.
+            // Calls the service method to change the subscription status based on themeId
+            // and userEmail.
             String responseMessage = abonnementService.changeSubscriptionStatus(themeId, userEmail);
-            return ResponseEntity.ok(responseMessage); // Return the success response (OK - 200).
+            return ResponseEntity.ok(responseMessage); // Returns a success message with HTTP status OK (200).
         } catch (UsernameNotFoundException e) {
-            // Handle the case where the user was not found (NOT_FOUND - 404)
+            // Handles the case where the user is not found, returning HTTP status NOT_FOUND
+            // (404).
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Error:L'utilisateur n'a pas été trouvé  " + userEmail);
+                    .body("Error: User not found " + userEmail);
         } catch (IllegalArgumentException e) {
-            // Handle invalid theme ID (NOT_FOUND - 404)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: Thème non trouvé  " + themeId);
+            // Handles invalid theme ID by returning HTTP status NOT_FOUND (404).
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: Theme not found " + themeId);
         } catch (Exception e) {
-            // Catch other unforeseen errors (INTERNAL_SERVER_ERROR - 500)
+            // Handles other unforeseen errors with HTTP status INTERNAL_SERVER_ERROR (500).
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
         }
     }
-
 }

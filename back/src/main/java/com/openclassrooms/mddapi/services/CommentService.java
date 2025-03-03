@@ -16,8 +16,12 @@ import com.openclassrooms.mddapi.repositories.CommentRepository;
 import com.openclassrooms.mddapi.repositories.UserRepository;
 import com.openclassrooms.mddapi.services.Interfaces.ICommentService;
 
+/**
+ * Service class responsible for handling comment-related operations.
+ */
 @Service
 public class CommentService implements ICommentService {
+
     @Autowired
     private ModelMapper modelMapper;
 
@@ -30,19 +34,29 @@ public class CommentService implements ICommentService {
     @Autowired
     private CommentRepository commentRepository;
 
-     @PostConstruct
+    /**
+     * Configures the ModelMapper to map specific fields between CommentModel and CommentDTO.
+     * This method is executed after the bean construction.
+     */
+    @PostConstruct
     public void configureModelMapper() {
         modelMapper.addMappings(new PropertyMap<CommentModel, CommentDTO>() {
             @Override
             protected void configure() {
-                // Mappe explicitement les propriétés qui ne sont pas identiques
+                // Explicitly map properties that do not have matching names.
                 map().setArticle_id(source.getArticleId());
                 map().setCreatedAt(source.getCreated_at());
             }
         });
     }
-    
 
+    /**
+     * Posts a comment for a given article.
+     *
+     * @param commentDTO The comment data transfer object containing user input.
+     * @param userEmail  The email of the authenticated user posting the comment.
+     * @return The saved comment as a DTO.
+     */
     @Override
     public CommentDTO postComment(CommentDTO commentDTO, String userEmail) {
         // Validate user existence using the provided email.
@@ -53,7 +67,7 @@ public class CommentService implements ICommentService {
         articleRepository.findById(commentDTO.getArticle_id())
                 .orElseThrow(() -> new RuntimeException("Article not found with ID: " + commentDTO.getArticle_id()));
 
-        // Map the CommentDTO to CommentModel
+        // Map the CommentDTO to CommentModel.
         CommentModel commentModel = modelMapper.map(commentDTO, CommentModel.class);
 
         // Set additional fields in the comment model before saving it to the database.
@@ -64,7 +78,7 @@ public class CommentService implements ICommentService {
         // Save the comment into the database.
         CommentModel savedComment = commentRepository.save(commentModel);
 
-        // Map the saved comment model to CommentaireDTO for the response.
+        // Map the saved comment model to CommentDTO for the response.
         CommentDTO comment_DTO = modelMapper.map(savedComment, CommentDTO.class);
 
         // Set the author's name in the DTO.
@@ -73,5 +87,4 @@ public class CommentService implements ICommentService {
         // Return the response DTO with the details of the posted comment.
         return comment_DTO;
     }
-
 }
