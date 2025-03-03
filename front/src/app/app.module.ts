@@ -13,24 +13,25 @@ import { UserComponent } from './pages/user/user.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/AuthInterceptor';
 
-
-
-
-
 @NgModule({
-  declarations: [AppComponent, HomeComponent, RegisterComponent, LoginComponent, UserComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    RegisterComponent,
+    LoginComponent,
+    UserComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
     ReactiveFormsModule,
-    CoreModule
-    
+    CoreModule,
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-  
-}
+export class AppModule {}

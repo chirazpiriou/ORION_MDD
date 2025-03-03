@@ -1,5 +1,5 @@
 export interface Theme {
-  id: number;        
-  theme: string;     
-  description: string; 
+  id: number;
+  theme: string;
+  description: string;
 }

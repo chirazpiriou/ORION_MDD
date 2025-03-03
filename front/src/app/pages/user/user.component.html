@@ -1,34 +1,31 @@
 <div class="user-container">
-    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
 
-      <h3>Profil Utilisateur</h3>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
 
-      <div class="form-group">
-        <input formControlName="name" type="text" id="name" name="name" autofocus/>
-      </div>
+    <h3>Profil Utilisateur</h3>
 
-      <div class="form-group">
-        <input formControlName="email" type="email" id="email" name="email" autofocus />
-      </div>
+    <div class="form-group">
+      <input formControlName="name" type="text" id="name" name="name" autofocus />
+    </div>
 
-      
+    <div class="form-group">
+      <input formControlName="email" type="email" id="email" name="email" autofocus />
+    </div>
 
-      <button class="violetButton" type="submit">Sauvegarder</button>
-      <div class="form-group">
-        <button class="label_red" type="button" (click)="logOut()">Se déconnecter</button>
-      </div>
+    <button class="violetButton" type="submit">Sauvegarder</button>
 
-    </form>
+    <div class="form-group">
+      <button class="label_red" type="button" (click)="logOut()">Se déconnecter</button>
+    </div>
+
+  </form>
+
+  <hr class="ligne" />
+
+  <h3 class="abonnements_h3">Abonnements</h3>
+
+  <section class="feed">
+    <app-theme *ngFor="let theme of themes" [theme]="theme" (subscriptionChanged)="loadThemes()"></app-theme>
+  </section>
   
-    <hr class="ligne" />
-  
-    <h3 class="abonnements_h3">Abonnements</h3>
-    <section class="feed">
-      <app-theme
-        *ngFor="let theme of themes"
-        [theme]="theme"
-        (subscriptionChanged)="loadThemes()"
-      ></app-theme>
-    </section>
-  </div>
-  
+</div>

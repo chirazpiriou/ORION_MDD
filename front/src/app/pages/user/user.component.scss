@@ -1,17 +1,17 @@
-@import '../../../styles/styles';
+@import "../../../styles/styles";
 
 .user-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  box-sizing: border-box;  
+  box-sizing: border-box;
 
   form {
     width: 100%;
     max-width: 500px;
     margin: 0 auto;
-    box-sizing: border-box;  
+    box-sizing: border-box;
 
     h3 {
       text-align: center;
@@ -27,12 +27,12 @@
       font-weight: bold;
       cursor: pointer;
       margin-left: 30%;
-      display: block;    
-      margin: 20px auto; 
-      width: auto; 
-      
+      display: block;
+      margin: 20px auto;
+      width: auto;
+
       &.violetButton {
-        background-color: #7763C5;
+        background-color: #7763c5;
         color: white;
         &:hover {
           background-color: #6653a5;
@@ -54,15 +54,15 @@
       input {
         width: 100%;
         padding: 10px;
-        border: 2px solid #7763C5;
+        border: 2px solid #7763c5;
         border-radius: 5px;
         font-size: 1rem;
-        box-sizing: border-box;  
+        box-sizing: border-box;
       }
 
       .label_red {
         width: 100%;
-        color: #B22222;
+        color: #b22222;
         font-weight: bold;
         text-align: center;
         background-color: transparent;
@@ -110,20 +110,18 @@
     margin: 20px 0;
   }
 
-  
-
   @media (max-width: 768px) {
     .user-container {
       padding: 15px;
     }
 
     form {
-      max-width: 90%;  
+      max-width: 90%;
     }
 
     button {
-      margin-left: 0;  
-      width: 100%;  
+      margin-left: 0;
+      width: 100%;
     }
 
     .abonnements_h3 {
@@ -131,7 +129,7 @@
     }
 
     app-theme {
-      width: 100%;  
+      width: 100%;
     }
   }
 
@@ -145,14 +143,11 @@
     }
 
     .form-group {
-      margin-bottom: 10px;  
+      margin-bottom: 10px;
     }
 
     button {
-      padding: 12px 20px;  
+      padding: 12px 20px;
     }
   }
 }
-
-
-

@@ -2,13 +2,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { CommentairesService } from '../../services/CommentaireService';
-import { Router } from '@angular/router';
 import { Commentaire } from '../../models/commentaire.model';
 
 @Component({
   selector: 'app-comment-form',
   templateUrl: './comment-form.component.html',
-  styleUrls: ['./comment-form.component.scss']
+  styleUrls: ['./comment-form.component.scss'],
 })
 export class CommentFormComponent implements OnInit {
   // Reactive form group for managing the comment form
@@ -29,27 +28,33 @@ export class CommentFormComponent implements OnInit {
 
   constructor(
     private commentairesService: CommentairesService, // Service to interact with the backend for comments
-    private fb: FormBuilder, // Angular's FormBuilder to create the form
+    private fb: FormBuilder // Angular's FormBuilder to create the form
   ) {}
   // Initialize the form with necessary validators
   ngOnInit(): void {
     this.commentForm = this.fb.group({
-      contenu: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(2000)]],
+      contenu: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(2000),
+        ],
+      ],
     });
   }
 
   // Handles form submission
   onSubmitForm(): void {
-    if (this.commentForm.valid) { // Check if form is valid before submitting
+    if (this.commentForm.valid) {
+      // Check if form is valid before submitting
       // Create a new subject for managing the lifecycle of the subscription
       const commentaire = this.commentForm.value as Commentaire;
       commentaire.article_id = this.articleId; // Set the article ID from input
 
-      console.log('Article ID récupéré:', commentaire.article_id);
-
-     
       // Call the service to submit the comment
-      this.commentairesService.create(commentaire)
+      this.commentairesService
+        .create(commentaire)
         .pipe(takeUntil(this.destroy$)) // Ensures unsubscription when the component is destroyed
         .subscribe({
           next: (response) => {
@@ -58,7 +63,8 @@ export class CommentFormComponent implements OnInit {
             this.commentAdded.emit(commentaire);
           },
           error: (error) => {
-            this.errorStr = error || 'An error occurred while posting the comment.'; // Handle any errors
+            this.errorStr =
+              error || 'An error occurred while posting the comment.'; // Handle any errors
           },
         });
     }
@@ -68,6 +74,4 @@ export class CommentFormComponent implements OnInit {
     this.destroy$.next(true); // Notify the observable to unsubscribe
     this.destroy$.complete(); // Complete the subject to avoid memory leaks
   }
-
-  
 }

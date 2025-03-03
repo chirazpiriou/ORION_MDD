@@ -7,14 +7,12 @@ import { Theme } from 'src/app/core/models/theme.model';
 import { ArticlesService } from 'src/app/core/services/ArticlesService';
 import { ThemeService } from 'src/app/core/services/ThemeService';
 
-
 @Component({
   selector: 'app-article-create',
   templateUrl: './article-create.component.html',
-  styleUrls: ['./article-create.component.scss']
+  styleUrls: ['./article-create.component.scss'],
 })
 export class ArticleCreateComponent implements OnInit, OnDestroy {
-
   public articleForm!: FormGroup;
   private destroy$ = new Subject<void>(); // Used to clean up subscriptions when the component is destroyed
   public errorStr: string = '';
@@ -39,7 +37,7 @@ export class ArticleCreateComponent implements OnInit, OnDestroy {
     this.articleForm = this.fb.group({
       theme: ['', Validators.required],
       titre: ['', Validators.required],
-      contenu: ['', Validators.required]
+      contenu: ['', Validators.required],
     });
   }
 
@@ -47,10 +45,9 @@ export class ArticleCreateComponent implements OnInit, OnDestroy {
    * Loads available themes from the service
    */
   private loadThemes(): void {
-    
     this.themesService.getAllThemes().subscribe({
       next: (themes) => (this.themes = themes),
-      error: (error) => console.error('Error loading themes:', error)
+      error: (error) => console.error('Error loading themes:', error),
     });
   }
 
@@ -61,8 +58,9 @@ export class ArticleCreateComponent implements OnInit, OnDestroy {
     if (this.articleForm.invalid) return; // Prevent submission if the form is invalid
 
     const articleRequest: ArticleRequest = this.articleForm.value;
-   
-    this.articlesService.create(articleRequest )
+
+    this.articlesService
+      .create(articleRequest)
       .pipe(takeUntil(this.destroy$)) // Unsubscribe when the component is destroyed
       .subscribe({
         next: () => {
@@ -70,8 +68,9 @@ export class ArticleCreateComponent implements OnInit, OnDestroy {
           this.router.navigate(['article/all']); // Redirect after successful submission
         },
         error: (error) => {
-          this.errorStr = error?.message || 'An error occurred while submitting the article.';
-        }
+          this.errorStr =
+            error?.message || 'An error occurred while submitting the article.';
+        },
       });
   }
 
@@ -82,5 +81,4 @@ export class ArticleCreateComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
 }

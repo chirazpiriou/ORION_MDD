@@ -33,9 +33,7 @@ export class UserComponent implements OnInit {
     });
     this.loadThemes();  // Loading themes on component initialization
     this.authService.get_profile().subscribe(profile => { 
-      console.log(profile);
       this.user = profile; // Récupérer le profil utilisateur
-      console.log(this.user.name);
       this.userForm.patchValue({ 
         name: this.user.name,
         email: this.user.email
@@ -61,7 +59,6 @@ export class UserComponent implements OnInit {
           .pipe(takeUntil(this.destroy$))
           .subscribe({
             next: () => {
-              console.log('Utilisateur mis à jour avec succès');
               this.authService.get_profile().subscribe(profile => { 
                 this.user = profile; // Recharger les infos utilisateur
                 this.loadThemes(); // Recharger les abonnements

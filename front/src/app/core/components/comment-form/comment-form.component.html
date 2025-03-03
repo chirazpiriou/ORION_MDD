@@ -1,21 +1,11 @@
 <form [formGroup]="commentForm" (ngSubmit)="onSubmitForm()">
   <div class="comment_form">
-    
-  
 
     <!-- Zone de texte -->
-    <textarea
-      formControlName="contenu"
-      placeholder="Ecrivez votre commentaire"
-      class="rounded-textarea"
-    ></textarea>
+    <textarea formControlName="contenu" placeholder="Ecrivez votre commentaire" class="rounded-textarea"></textarea>
 
     <button class="send" type="submit">
-      <mat-icon
-        aria-hidden="false"
-        aria-label="Example home icon"
-        fontIcon="send"
-      ></mat-icon>
+      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="send"></mat-icon>
     </button>
 
   </div>

@@ -1,17 +1,21 @@
 <div class="form_style login-bloc">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmitForm()">
-      <h3>Se connecter</h3>
-      <div class="form-group">
-        <label for="identifier">E-mail ou nom d’utilisateur</label>
-        <input formControlName="identifier" type="text" id="identifier">
-      </div>
 
-      <div class="form-group">
-        <label for="password">Mot de passe</label>
-        <input formControlName="password" type="password" id="password">
-      </div>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmitForm()">
 
-      <button class="violetButton" type="submit">Se connecter</button>
-      
-    </form>
-  </div>
+    <h3>Se connecter</h3>
+    
+    <div class="form-group">
+      <label for="identifier">E-mail ou nom d’utilisateur</label>
+      <input formControlName="identifier" type="text" id="identifier">
+    </div>
+
+    <div class="form-group">
+      <label for="password">Mot de passe</label>
+      <input formControlName="password" type="password" id="password">
+    </div>
+
+    <button class="violetButton" type="submit">Se connecter</button>
+
+  </form>
+
+</div>

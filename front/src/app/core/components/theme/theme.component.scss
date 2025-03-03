@@ -1,42 +1,41 @@
-@import '../../../../styles/styles.scss';
-mat-card{
-    margin: 25px;
-    border: none;
-    border-radius: 8px;
-    background-color: rgb(236, 236, 236);
-    .titre{
-        text-align: left;
-        left: 0;
-        margin-left: 0;
-        padding-left: 0;
-    }
-    
+@import "../../../../styles/styles.scss";
+mat-card {
+  margin: 25px;
+  border: none;
+  border-radius: 8px;
+  background-color: rgb(236, 236, 236);
+  .titre {
+    text-align: left;
+    left: 0;
+    margin-left: 0;
+    padding-left: 0;
+  }
 }
 
 mat-card-footer {
-    display: flex;
-    justify-content: center; /* Centre tous les éléments à l'intérieur du footer */
-    align-items: center; /* Centre verticalement si nécessaire */
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
 }
 
 .subscribe {
-    margin: 10px; /* Espace autour du bouton */
+  margin: 10px; 
 }
 
 button {
-    max-width: 150px; 
-    padding: 10px 0;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    width: 100%;
+  max-width: 150px;
+  padding: 10px 0;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
 
-&.violetButton {
-    background-color: #7763C5;
+  &.violetButton {
+    background-color: #7763c5;
     color: white;
     &:hover {
-    background-color: #6653a5; 
-    
+      background-color: #6653a5;
     }
-}}
+  }
+}

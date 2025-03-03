@@ -1,4 +1,5 @@
 <mat-card >
+
     <mat-card-header>
       <mat-card-title>
         <span class="theme-title">{{ theme.theme }}</span>
@@ -10,9 +11,12 @@
     </mat-card-content>
   
     <mat-card-footer>
+
       <button class="violetButton subscribe" (click)="changeSubscriptionStatus(theme.id)">
         {{ theme.isSubscribed ? 'Se désabonner' : "S'abonner" }}
       </button>
+
     </mat-card-footer>
+    
   </mat-card>
   

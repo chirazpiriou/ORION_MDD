@@ -1,4 +1,4 @@
-@import '../../../styles/styles';
+@import "../../../styles/styles";
 
 .sub_header {
   margin-bottom: 10px;
@@ -32,7 +32,7 @@ button {
   width: 100%; /* Makes the button take up full width on small screens */
 
   &.violetButton {
-    background-color: #7763C5;
+    background-color: #7763c5;
     color: white;
     &:hover {
       background-color: #6653a5;
