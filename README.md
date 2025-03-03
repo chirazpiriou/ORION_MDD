@@ -113,11 +113,9 @@ The API uses JWT for authentication. Protected endpoints require a valid JWT tok
 - Whether you're using a mobile phone, tablet, or desktop, the application will automatically adjust its design to fit your device.
 
 ## Environment Variable Configuration
-You need to define the following environment variables to make it work:  
+You need to define this environment variable to make it work:  
 **- PASSWORD_db_MDD ->**  The password for the database   
-**- JWT_SECRET_KEY ->**  Secret key to sign JWT tokens
 
 ```
 PASSWORD_db_MDD : root
-JWT_SECRET_KEY : 3DHjk82hgfFj82kLwEn81zS0oMn2J29fGhJ29kKLMpO89nHdDjslPo9LsDkfj32d
 ```
