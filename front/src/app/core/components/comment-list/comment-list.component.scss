@@ -1,0 +1,21 @@
+mat-card {
+  display: flex;
+  margin-top: 1%;
+  margin-left: 7%;
+  height: fit-content;
+  width: 50%;
+  flex-wrap: wrap; 
+  align-items: flex-start; 
+  background-color: white;
+}
+
+.comment_content {
+  border-radius: 15px;
+  text-align: justify;
+  padding: 35px 20px;
+  background-color: rgb(236, 236, 236);
+  width: 65%; 
+  margin-left: 25%;
+  margin-bottom: 20px; 
+  margin-top: 0; 
+}

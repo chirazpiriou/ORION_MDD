@@ -1,0 +1,36 @@
+<div class="article_creation">
+
+  <!-- Article Creation Form -->
+  <form [formGroup]="articleForm" (ngSubmit)="onSubmitForm()">
+
+    <h3>Créer un nouvel article</h3>
+
+    <!-- Theme Selection Dropdown -->
+    <div class="input_rectangle">
+      <select formControlName="theme" id="theme_input" required>
+        <option value="">Sélectionner un thème.</option>
+        <option *ngFor="let theme of themes" [value]="theme.theme">
+          {{ theme.theme }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Article Title Input -->
+    <div class="input_rectangle">
+      <input formControlName="titre" placeholder="Title de l'article" type="text" id="titre_input" required />
+    </div>
+
+    <!-- Article Content Textarea -->
+    <div class="input_rectangle">
+      <textarea formControlName="contenu" placeholder="Contenu de l'article" id="article_content_textarea"
+        class="textarea" rows="5" required></textarea>
+    </div>
+
+    <!-- Submit Button -->
+    <button class="violetButton " type="submit" [disabled]="articleForm.invalid">
+      Créer
+    </button>
+
+  </form>
+  
+</div>

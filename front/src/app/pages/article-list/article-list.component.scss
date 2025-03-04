@@ -1,0 +1,64 @@
+@import "../../../styles/styles";
+
+.sub_header {
+  margin-bottom: 10px;
+
+  .create_btn {
+    float: left;
+    margin-left: 1.5%;
+  }
+
+  .sort_article {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    float: right;
+    margin-right: 5%;
+    cursor: pointer;
+    /* No background, no border */
+    background: none;
+    border: none;
+    padding: 0;
+  }
+}
+
+button {
+  max-width: 150px;
+  padding: 10px 0;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%; /* Makes the button take up full width on small screens */
+
+  &.violetButton {
+    background-color: #7763c5;
+    color: white;
+    &:hover {
+      background-color: #6653a5;
+    }
+  }
+}
+
+.feed_articles {
+  clear: both;
+  margin-top: 20px;
+}
+
+.feed {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  padding: 20px;
+
+  /* Media query for small screens */
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr; /* Stacks articles vertically on smaller screens */
+    padding: 10px; /* Reduces padding on smaller screens */
+  }
+
+  /* Media query for extra small screens */
+  @media (max-width: 480px) {
+    grid-gap: 5px; /* Reduces the gap between items for very small screens */
+  }
+}

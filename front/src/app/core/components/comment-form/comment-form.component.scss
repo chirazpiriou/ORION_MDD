@@ -1,0 +1,53 @@
+form {
+  .text-danger {
+    display: block;
+  }
+  .rounded-textarea {
+    display: inline;
+    margin-right: 1%;
+    width: 90%; 
+    height: 150px; 
+    padding: 10px; 
+    border-radius: 15px; 
+    border: 1px solid #ccc; 
+    resize: none; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    font-size: 16px; 
+    font-family: Arial, sans-serif; 
+  }
+  .comment_form {
+    padding-top: 20px;
+    display: flex; 
+
+    button.send {
+      position: relative;
+      top: -20px;
+      left: 20px;
+      transform: rotate(-45deg);
+
+      margin-left: 4%;
+      margin-top: 3%;
+      background-color: white;
+      border: none;
+      outline: none; 
+
+      &:hover,
+      &:visited,
+      &:focus,
+      &:active {
+        
+        border: none;
+        outline: none;
+      }
+      .mat-icon {
+        cursor: pointer;
+        justify-content: flex-end; 
+        align-items: center;
+        color: #7763c5;
+        font-size: 64px;
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+}

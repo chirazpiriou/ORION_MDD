@@ -1,0 +1,40 @@
+<section class="article-bloc" *ngIf="article"> <!-- This section is conditionally displayed if 'article' exists -->
+  <mat-card> <!-- Angular Material card component for displaying article content -->
+
+    <mat-card-title> <!-- Angular Material card title component for displaying the article's title -->
+      {{ article.titre }} <!-- Binding article title to the view -->
+    </mat-card-title>
+
+    <mat-card-content> <!-- Angular Material card content component for displaying the body of the article -->
+
+      <span class="second_line">
+
+        <!-- Display article's creation date formatted using Angular's date pipe -->
+        <span class="article_date">{{ article.createdAt | date : "EEEE d MMMM y à H:mm:ss" }}</span>
+
+        <!-- Display article's author -->
+        <span class="article_auteur">{{ article.auteur }}</span>
+
+        <!-- Display article's theme -->
+        <span class="article_theme">{{ article.theme }}</span>
+        
+      </span>
+
+      <!-- Display the main content of the article -->
+      {{ article.contenu }}
+    </mat-card-content>
+
+  </mat-card>
+
+  <!-- Angular Material divider to separate sections visually -->
+  <mat-divider></mat-divider>
+
+  <!-- Title for the comments section -->
+  <h3 class="title_section">Commentaires</h3>
+
+  <section class="feed_comments">
+    <app-comment-list *ngFor="let commentaire of commentaires" [commentaire]="commentaire"></app-comment-list>
+  </section>
+  <app-comment-form [articleId]="article.id" (commentAdded)="addCommentToList($event)"></app-comment-form>
+
+</section>
