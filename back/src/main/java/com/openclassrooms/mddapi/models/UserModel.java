@@ -1,50 +1,45 @@
 package com.openclassrooms.mddapi.models;
 
 import java.security.Principal;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
 
-/**
- * UserModel represents a user entity in the system.
- * This class is mapped to the "USERS" table in the database.
- * It implements the Principal interface to be used as a security context user.
- */
 @Entity
-@Table(name = "USERS") // Maps the class to the "USERS" table in the database.
-@Data // Generates getters, setters, equals, hashCode, and toString methods
-      // automatically using Lombok.
+@Table(name = "USERS")
+@Data
 public class UserModel implements Principal {
-
-    @Id // Marks this field as the primary key in the database.
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Automatically generates unique IDs for the user.
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true) // Ensures that the email is unique in the database.
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    private String name; // Represents the user's name.
+    @Column(name = "name", nullable = false)
+    private String name;
 
-    private String password; // Represents the user's password.
+    @Column(name = "password", nullable = false)
+    private String password;
 
-    @CreationTimestamp // Automatically sets the creation timestamp when the user is created.
-    private Timestamp created_at; // Represents the timestamp when the user was created.
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
 
-    /**
-     * Returns the name of the user.
-     * This method is part of the Principal interface.
-     * 
-     * @return The name of the user.
-     */
-    @Override
-    public String getName() {
-        return name;
-    }
+    @OneToMany(mappedBy = "user")
+    private List<AbonnementModel> abonnements;
+
+    @OneToMany(mappedBy = "auteur")
+    private List<ArticleModel> articles;
+
+    @OneToMany(mappedBy = "user")
+    private List<CommentModel> commentaires;
+
 }

@@ -1,9 +1,11 @@
 package com.openclassrooms.mddapi.services;
 
-import java.util.Optional;
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import com.openclassrooms.mddapi.dto.SubscriptionStatusDTO;
 import com.openclassrooms.mddapi.models.AbonnementModel;
 import com.openclassrooms.mddapi.models.ThemeModel;
 import com.openclassrooms.mddapi.models.UserModel;
@@ -16,38 +18,42 @@ import com.openclassrooms.mddapi.services.Interfaces.IAbonnementService;
 public class AbonnementService implements IAbonnementService {
 
     @Autowired
-    ThemeRepository themeRepository; // Injects the ThemeRepository dependency
+    private AbonnementRepository abonnementRepository;
 
     @Autowired
-    private UserRepository userRepository; // Injects the UserRepository dependency
+    private UserRepository userRepository;
 
     @Autowired
-    AbonnementRepository abonnementRepository; // Injects the AbonnementRepository dependency
+    private ThemeRepository themeRepository;
 
+    @Transactional
     @Override
-    public String changeSubscriptionStatus(Integer themeId, String userEmail) {
-        // Retrieve the user by email, throwing an exception if not found
+    public SubscriptionStatusDTO changeSubscriptionStatus(Integer themeId, String userEmail) {
         UserModel user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + userEmail));
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Retrieve the theme by ID, throwing an exception if not found
-        ThemeModel theme = themeRepository.findById(themeId)
-                .orElseThrow(() -> new IllegalArgumentException("Theme not found with ID: " + themeId));
+        boolean isSubscribed = abonnementRepository.existsByUserIdAndThemeId(user.getId(), themeId);
 
-        // Check if the user is already subscribed to the theme
-        Optional<AbonnementModel> abonnementModel = abonnementRepository.findByUserIdAndThemeId(user.getId(), themeId);
-        String responseMessage;
+        if (isSubscribed) {
+            AbonnementModel abonnement = abonnementRepository.findByUserId(user.getId()).stream()
+                    .filter(a -> a.getTheme().getId().equals(themeId))
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("Subscription not found"));
 
-        if (abonnementModel.isPresent()) {
-            // If the subscription exists, unsubscribe the user
-            abonnementRepository.delete(abonnementModel.get());
-            responseMessage = "Se désabonner de " + theme.getTheme(); // Unsubscribe message (in French)
+            abonnementRepository.delete(abonnement);
+
         } else {
-            // If not subscribed, create a new subscription
-            abonnementRepository.save(new AbonnementModel(themeId, user.getId()));
-            responseMessage = "S'abonner à " + theme.getTheme(); // Subscribe message (in French)
-        }
+            ThemeModel theme = themeRepository.findById(themeId)
+                    .orElseThrow(() -> new RuntimeException("Theme not found"));
+            AbonnementModel abonnement = new AbonnementModel();
+            abonnement.setUser(user);
+            abonnement.setTheme(theme);
+            abonnementRepository.save(abonnement);
 
-        return responseMessage; // Return the subscription status message
+        }
+        SubscriptionStatusDTO status = new SubscriptionStatusDTO();
+        status.setSubscribed(!isSubscribed);
+        return status;
     }
+
 }
