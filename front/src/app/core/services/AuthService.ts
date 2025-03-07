@@ -24,10 +24,7 @@ export class AuthService {
   }
 
   // Method for login
-  public login(loginRequest: {
-    identifier: string;
-    password: string;
-  }): Observable<Token> {
+  public login(loginRequest:{ email?: string; name?: string; password: string }): Observable<Token> {
     return this.httpClient.post<Token>(
       `${this.pathService}/login`,
       loginRequest

@@ -33,10 +33,11 @@ export class UserComponent implements OnInit {
     });
     this.loadThemes();  // Loading themes on component initialization
     this.authService.get_profile().subscribe(profile => { 
-      this.user = profile; // Récupérer le profil utilisateur
+      this.user = profile; 
       this.userForm.patchValue({ 
         name: this.user.name,
-        email: this.user.email
+        email: this.user.email,
+        password: ''
       });
     });
   }
@@ -60,8 +61,8 @@ export class UserComponent implements OnInit {
           .subscribe({
             next: () => {
               this.authService.get_profile().subscribe(profile => { 
-                this.user = profile; // Recharger les infos utilisateur
-                this.loadThemes(); // Recharger les abonnements
+                this.user = profile; 
+                this.loadThemes(); 
               });
             },
             error: (error) => {
@@ -71,11 +72,7 @@ export class UserComponent implements OnInit {
       }
     }
 
-    logOut(): void {
-      this.authService.logOut();
-      // Rediriger l'utilisateur vers la page de connexion ou d'accueil
-      this.router.navigate(['/login']);
-    }
+   
 
   // Cleanup logic when the component is destroyed (cancel any ongoing subscriptions)
   ngOnDestroy(): void {

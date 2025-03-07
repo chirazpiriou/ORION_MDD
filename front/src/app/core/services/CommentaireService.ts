@@ -13,10 +13,11 @@ export class CommentairesService {
   constructor(private httpClient: HttpClient) {}
 
   public create(commentaire: Commentaire): Observable<Commentaire> {
-    // Create the URL with the email as a query parameter
     const url = `${this.pathService}/create`;
-
-    // Send a POST request to create the comment, passing the commentaire object
     return this.httpClient.post<Commentaire>(url, commentaire);
+  }
+
+  public getCommentsByArticleId(articleId: number): Observable<Commentaire[]> {
+    return this.httpClient.get<Commentaire[]>(`${this.pathService}/article/${articleId}`);
   }
 }

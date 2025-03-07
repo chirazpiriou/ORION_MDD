@@ -1,5 +1,7 @@
 package com.openclassrooms.mddapi.dto;
 
+
+
 import lombok.Data;
 
 @Data
@@ -11,4 +13,7 @@ public class ArticleDTO {
     private Integer auteurId;
     private Integer themeId;
     private String createdAt;
+    private String auteur;
+    private String theme;
+
 }

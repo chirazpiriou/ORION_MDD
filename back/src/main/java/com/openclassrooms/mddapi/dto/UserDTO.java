@@ -1,11 +1,8 @@
 package com.openclassrooms.mddapi.dto;
 
-
-
 import lombok.Data;
 
-
-@Data 
+@Data
 public class UserDTO {
 
     private Integer id;
@@ -13,4 +10,5 @@ public class UserDTO {
     private String name;
     private String password;
     private String createdAt;
+    
 }

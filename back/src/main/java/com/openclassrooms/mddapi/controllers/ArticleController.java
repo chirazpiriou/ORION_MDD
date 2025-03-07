@@ -1,7 +1,8 @@
 package com.openclassrooms.mddapi.controllers;
 
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,9 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.openclassrooms.mddapi.dto.ArticleDTO;
 import com.openclassrooms.mddapi.services.ArticleService;
 
-
-@RestController 
-@RequestMapping("/api/article") 
+@RestController
+@RequestMapping("/api/article")
 public class ArticleController {
 
     @Autowired
@@ -27,9 +27,9 @@ public class ArticleController {
 
     @GetMapping("/detail/{id}")
     public ResponseEntity<ArticleDTO> getArticleById(@PathVariable Integer id, Authentication authentication) {
-    
+
         ArticleDTO articleDTO = articleService.getArticleById(id);
-        if (articleDTO != null ) {
+        if (articleDTO != null) {
             return ResponseEntity.ok(articleDTO);
         } else {
             return ResponseEntity.notFound().build();
@@ -44,10 +44,15 @@ public class ArticleController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> postArticle(@RequestBody ArticleDTO articleDTO, Authentication authentication) {
+    public ResponseEntity<Map<String, String>> postArticle(@RequestBody ArticleDTO articleDTO,
+            Authentication authentication) {
         String userEmail = getUserEmailFromAuthentication(authentication);
         articleService.postArticle(articleDTO, userEmail);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Article created successfully");
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Article created successfully");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     private String getUserEmailFromAuthentication(Authentication authentication) {

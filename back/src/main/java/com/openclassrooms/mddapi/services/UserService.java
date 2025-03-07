@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import com.openclassrooms.mddapi.models.UserModel;
 import com.openclassrooms.mddapi.repositories.UserRepository;
 
@@ -16,13 +15,22 @@ import com.openclassrooms.mddapi.repositories.UserRepository;
  */
 @Service
 public class UserService implements UserDetailsService {
-
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Loads a user by their email or name.
+     * 
+     * @param identifier The user's email or name.
+     * @return A {@link UserDetails} object containing the user's email and
+     *         password.
+     * @throws UsernameNotFoundException if no user is found.
+     */
+
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        UserModel user = userRepository.findByEmail(email)
+    public UserDetails loadUserByUsername(String identifier) throws UsernameNotFoundException {
+        UserModel user = userRepository.findByEmail(identifier)
+                .or(() -> userRepository.findByName(identifier))
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         return new User(user.getEmail(), user.getPassword(), new ArrayList<>());
     }

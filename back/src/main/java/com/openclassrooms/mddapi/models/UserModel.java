@@ -3,7 +3,6 @@ package com.openclassrooms.mddapi.models;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

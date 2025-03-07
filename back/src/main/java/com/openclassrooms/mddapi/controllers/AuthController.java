@@ -40,13 +40,13 @@ public class AuthController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<String> updateUser(Authentication authentication, @RequestBody UserDTO userDTO) {
+    public ResponseEntity<TokenResponse> updateUser(Authentication authentication, @RequestBody UserDTO userDTO) {
         try {
             String userEmail = authentication.getName();
-            String message = authService.updateUser(userEmail, userDTO);
-            return ResponseEntity.ok(message);
+            TokenResponse tokenResponse = authService.updateUser(userEmail, userDTO);
+            return ResponseEntity.ok(tokenResponse);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new TokenResponse("User not found"));
         }
     }
 
