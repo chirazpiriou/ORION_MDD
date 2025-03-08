@@ -30,11 +30,11 @@
   <mat-divider></mat-divider>
 
   <!-- Title for the comments section -->
-  <h3 class="title_section">Commentaires</h3>
+  <h3 class="title_section"> Commentaires</h3>
 
   <section class="feed_comments">
     <app-comment-list *ngFor="let commentaire of commentaires" [commentaire]="commentaire"></app-comment-list>
   </section>
-  <app-comment-form [articleId]="article.id" (commentAdded)="addCommentToList($event)"></app-comment-form>
+  <app-comment-form [articleId]="article.id ?? null" (commentsRefreshed)="updateCommentsList($event)"></app-comment-form>
 
 </section>

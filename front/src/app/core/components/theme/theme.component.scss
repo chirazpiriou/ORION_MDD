@@ -18,7 +18,10 @@ mat-card-footer {
   align-items: center; 
 }
 
-.subscribe {
+.subscribe1 {
+  margin: 10px; 
+}
+.subscribe2 {
   margin: 10px; 
 }
 
@@ -36,6 +39,15 @@ button {
     color: white;
     &:hover {
       background-color: #6653a5;
+    }
+  }
+
+  &.grayButton {
+    background-color: gray;
+    color: white;
+
+    &:hover {
+      background-color: darkgray;
     }
   }
 }

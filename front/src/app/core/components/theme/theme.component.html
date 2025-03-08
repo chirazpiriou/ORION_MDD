@@ -12,8 +12,9 @@
   
     <mat-card-footer>
 
-      <button class="violetButton subscribe" (click)="changeSubscriptionStatus(theme.id)">
-        {{ theme.isSubscribed ? 'Se désabonner' : "S'abonner" }}
+      <button [ngClass]="{ 'violetButton subscribe1': !theme.isSubscribed, 'grayButton subscribe2': theme.isSubscribed }"
+      (click)="changeSubscriptionStatus(theme.id)" >
+      {{ isUserSubscribedPage ? 'Se désabonner' : (theme.isSubscribed ? 'Déjà abonné' : 'S\'abonner') }}
       </button>
 
     </mat-card-footer>

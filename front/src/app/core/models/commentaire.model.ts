@@ -1,9 +1,11 @@
 export class Commentaire {
   constructor(
-    public user_str: string,
+    public userName: string,
     public contenu: string,
     public createdAt: Date,
+    public userId: number,
     public id?: number,
-    public article_id?: number
+    public articleId?: number
+    
   ) {}
 }

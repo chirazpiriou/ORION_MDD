@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { filter, map, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { Subject, switchMap, takeUntil } from 'rxjs';
 import { Article } from 'src/app/core/models/article.model';
 import { Commentaire } from 'src/app/core/models/commentaire.model';
 import { ArticlesService } from 'src/app/core/services/ArticlesService';
-
+import { CommentairesService } from 'src/app/core/services/CommentaireService';
 
 @Component({
   selector: 'app-article-detail',
@@ -12,59 +12,60 @@ import { ArticlesService } from 'src/app/core/services/ArticlesService';
   styleUrls: ['./article-detail.component.scss'],
 })
 export class ArticleDetailComponent implements OnInit, OnDestroy {
-  article!: Article; // Article variable to hold the article data
-  commentaires!: Commentaire[]; // Commentaire array to hold the article's comments
-  article_id!: number | null; // Article ID extracted from the URL
-  private destroy$: Subject<boolean> = new Subject(); // Subject to handle component destruction and unsubscribe
-  error_str!: string; // Variable to hold error message
+  article!: Article;
+  commentaires: Commentaire[] = [];
+  article_id!: number | null;
+  private destroy$: Subject<boolean> = new Subject();
+  error_str!: string;
 
   constructor(
     private route: ActivatedRoute,
-    private articleService: ArticlesService
+    private articleService: ArticlesService,
+    private commentairesService: CommentairesService
   ) {}
 
   ngOnInit(): void {
-    // Using ActivatedRoute to extract the article ID from the URL and fetch the article details
     this.route.paramMap
       .pipe(
-        // Extract the 'id' from the URL parameters
-        map((params) => params.get('id')),
-        // Filter out null or undefined ID
-        filter((id) => !!id),
-        // Convert the ID to a number
-        map((id) => Number(id)),
-        // Save the article ID to a local variable
-        tap((id) => (this.article_id = id)),
-        // Switch to the observable that fetches article details from the API
-        switchMap((id) =>
-          this.articleService.detail(id).pipe(takeUntil(this.destroy$))
-        ) // Automatically unsubscribe on component destroy
+        switchMap((params) => {
+          const id = Number(params.get('id'));
+          this.article_id = id;
+          return this.articleService.detail(id);
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe({
         next: (articleResponse) => {
-          // When data is successfully fetched, assign it to the component's properties
           this.article = articleResponse;
-          this.commentaires = articleResponse.commentaires; // Assign comments to the commentaire variable
+          this.loadComments();
         },
         error: (error) => {
-          // Handle error and display a message
-          this.error_str =
-            error || 'An error occurred while loading the article';
-          console.error(this.error_str); // Log the error message
+          this.error_str = error || 'Une erreur est survenue lors du chargement de l’article';
         },
       });
   }
 
-  addCommentToList(newComment: Commentaire): void {
-    if (this.commentaires) {
-      this.commentaires = [...this.commentaires, newComment]; // Ajouter le commentaire sans recharger la page
-    } else {
-      this.commentaires = [newComment]; // Initialiser si la liste est vide
+  loadComments(): void {
+    if (this.article_id) {
+      this.commentairesService.getCommentsByArticleId(this.article_id)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (comments) => {
+            this.commentaires = comments;
+          },
+          error: () => {
+            this.commentaires = [];
+          },
+        });
     }
   }
 
+
+  updateCommentsList(updatedComments: Commentaire[]): void {
+    this.commentaires = updatedComments;
+  }
+
   ngOnDestroy(): void {
-    // Clean up the subscriptions when the component is destroyed to avoid memory leaks
     this.destroy$.next(true);
     this.destroy$.complete();
   }

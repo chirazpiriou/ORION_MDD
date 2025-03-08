@@ -37,7 +37,9 @@ export class ArticlesService {
       .post<Article>(`${this.pathService}/create`, article)
       .pipe(
         catchError((error) => {
-          console.error('Error creating article:', error);
+        console.error('Error creating article:', error);
+        console.error('Response error status:', error.status);
+        console.error('Response error message:', error.message);
           return throwError(() => error);
         })
       );

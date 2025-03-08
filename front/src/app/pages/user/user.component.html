@@ -5,18 +5,20 @@
     <h3>Profil Utilisateur</h3>
 
     <div class="form-group">
-      <input formControlName="name" type="text" id="name" name="name" autofocus />
+      <input formControlName="name" type="text" id="name" name="name" />
     </div>
 
     <div class="form-group">
-      <input formControlName="email" type="email" id="email" name="email" autofocus />
+      <input formControlName="email" type="email" id="email" name="email"  />
+    </div>
+
+    <div class="form-group">
+      <input formControlName="password" type="password" id="password" name="password" placeholder="Mot de passe"  />
     </div>
 
     <button class="violetButton" type="submit">Sauvegarder</button>
 
-    <div class="form-group">
-      <button class="label_red" type="button" (click)="logOut()">Se déconnecter</button>
-    </div>
+  
 
   </form>
 
@@ -25,7 +27,7 @@
   <h3 class="abonnements_h3">Abonnements</h3>
 
   <section class="feed">
-    <app-theme *ngFor="let theme of themes" [theme]="theme" (subscriptionChanged)="loadThemes()"></app-theme>
+    <app-theme *ngFor="let theme of themes" [theme]="theme" [isUserSubscribedPage]="true" (subscriptionChanged)="loadThemes()"></app-theme>
   </section>
   
 </div>

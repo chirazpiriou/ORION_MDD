@@ -1,30 +1,20 @@
 package com.openclassrooms.mddapi.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import com.openclassrooms.mddapi.dto.ArticleDTO;
-import com.openclassrooms.mddapi.dto.CommentDTO;
-import com.openclassrooms.mddapi.dto.ThemeDTO;
-import com.openclassrooms.mddapi.models.AbonnementModel;
 import com.openclassrooms.mddapi.models.ArticleModel;
-import com.openclassrooms.mddapi.models.CommentModel;
 import com.openclassrooms.mddapi.models.ThemeModel;
 import com.openclassrooms.mddapi.models.UserModel;
 import com.openclassrooms.mddapi.repositories.AbonnementRepository;
 import com.openclassrooms.mddapi.repositories.ArticleRepository;
-import com.openclassrooms.mddapi.repositories.CommentRepository;
 import com.openclassrooms.mddapi.repositories.ThemeRepository;
 import com.openclassrooms.mddapi.repositories.UserRepository;
 import com.openclassrooms.mddapi.services.Interfaces.IArticleService;
 
-/**
- * Service class for managing articles.
- */
 @Service
 public class ArticleService implements IArticleService {
 
@@ -32,7 +22,7 @@ public class ArticleService implements IArticleService {
     private ArticleRepository articleRepository;
 
     @Autowired
-    private CommentRepository commentRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private ThemeRepository themeRepository;
@@ -40,132 +30,110 @@ public class ArticleService implements IArticleService {
     @Autowired
     private AbonnementRepository abonnementRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private ModelMapper modelMapper;
-
     /**
-     * Retrieves an article by its ID, including its theme, author, and comments.
-     *
-     * @param id The ID of the article to retrieve.
-     * @return An ArticleDTO containing the article details or null if not found.
+     * Retrieves an article by its ID.
+     * 
+     * <p>
+     * This method fetches an article's details by its ID and returns them in an
+     * {@link ArticleDTO}.
+     * </p>
+     * 
+     * @param id The ID of the article to be retrieved.
+     * @return A {@link ArticleDTO} containing the article's details (ID, title,
+     *         content, author, theme, and creation date).
+     * @throws RuntimeException if the article with the given ID is not found.
      */
+
+    @Override
     public ArticleDTO getArticleById(Integer id) {
-        // Retrieve the article by ID or throw an exception if not found.
-        ArticleModel article = articleRepository.findById(id).orElseThrow();
-
-        // Convert the ArticleModel entity to an ArticleDTO.
-        ArticleDTO articleDTO = modelMapper.map(article, ArticleDTO.class);
-
-        // Fetch and set the theme of the article.
-        Optional<ThemeModel> theme = themeRepository.findById(article.getThemeId());
-        theme.ifPresent(themeModel -> {
-            ThemeDTO themeDTO = modelMapper.map(themeModel, ThemeDTO.class);
-            articleDTO.setTheme(themeDTO.getTheme());
-        });
-
-        // Retrieve and set the author's name for the article.
-        UserModel author = userRepository.findById(article.getAuteur_id()).orElseThrow();
-        articleDTO.setAuteur(author.getName());
-
-        // Retrieve all comments associated with the article and convert them to DTOs.
-        List<CommentModel> comments = commentRepository.findAllByArticleId(article.getId());
-        List<CommentDTO> commentDTOs = comments.stream().map(comment -> {
-            CommentDTO commentDTO = modelMapper.map(comment, CommentDTO.class);
-
-            // Retrieve and set the author's name for each comment.
-            UserModel commentAuthor = userRepository.findById(comment.getAuteur_id()).orElseThrow();
-            commentDTO.setUser_str(commentAuthor.getName());
-            commentDTO.setCreatedAt(comment.getCreated_at());
-
-            return commentDTO;
-        }).collect(Collectors.toList());
-
-        // Set the comments and creation date in the article DTO.
-        articleDTO.setCommentaires(commentDTOs);
-        articleDTO.setCreatedAt(article.getCreated_at());
-
+        ArticleModel article = articleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Article non trouvé avec l'ID: " + id));
+        ArticleDTO articleDTO = new ArticleDTO();
+        articleDTO.setId(article.getId());
+        articleDTO.setTitre(article.getTitre());
+        articleDTO.setContenu(article.getContenu());
+        articleDTO.setAuteur(article.getAuteur().getName());
+        articleDTO.setTheme(article.getTheme().getTheme());
+        articleDTO.setCreatedAt(article.getCreatedAt().toString());
         return articleDTO;
     }
 
     /**
-     * Retrieves all articles for a given user based on their subscribed themes.
-     *
-     * @param userEmail The email of the user.
-     * @return A list of ArticleDTOs for the user.
+     * Retrieves all articles for a user based on their subscribed themes.
+     * 
+     * <p>
+     * This method fetches the user's subscribed themes, then retrieves all articles
+     * associated with those themes and returns them in a list of
+     * {@link ArticleDTO}.
+     * </p>
+     * 
+     * @param userEmail The email of the user for whom the articles are being
+     *                  retrieved.
+     * @return A list of {@link ArticleDTO} containing the details (ID, title,
+     *         content, author, theme, and creation date) of the articles related to
+     *         the user's subscribed themes.
+     * @throws RuntimeException         if the user with the given email is not
+     *                                  found.
+     * @throws IllegalArgumentException if the user is not found with the specified
+     *                                  email.
      */
+
     @Override
     public List<ArticleDTO> getAllArticlesForUser(String userEmail) {
-        // Retrieve the user by email or throw an exception.
-        UserModel userModel = this.userRepository.findByEmail(userEmail)
+        UserModel user = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        Integer userId = userModel.getId();
-
-        // Get all theme IDs the user is subscribed to.
-        List<Integer> themeIds = this.abonnementRepository.findAllByUserId(userId)
+        if (user == null) {
+            throw new IllegalArgumentException("Utilisateur non trouvé avec l'email: " + userEmail);
+        }
+        List<Integer> themeIds = abonnementRepository.findByUserId(user.getId())
                 .stream()
-                .map(AbonnementModel::getThemeId)
+                .map(abonnement -> abonnement.getTheme().getId())
                 .collect(Collectors.toList());
-
-        // Retrieve all articles related to the subscribed themes.
-        List<ArticleModel> articleModels = this.articleRepository.findAllByThemeIdIn(themeIds);
-
-        // Convert articles to DTO format.
-        return articleModels.stream()
+        List<ArticleModel> articles = articleRepository.findByThemeIdIn(themeIds);
+        return articles.stream()
                 .map(article -> {
-                    ArticleDTO articleDTO = modelMapper.map(article, ArticleDTO.class);
-                    articleDTO.setCreatedAt(article.getCreated_at());
-
-                    // Retrieve and set the author's name.
-                    UserModel authorModel = this.userRepository.findById(article.getAuteur_id())
-                            .orElseThrow(() -> new RuntimeException("Author not found"));
-                    articleDTO.setAuteur(authorModel.getName());
-
-                    // Retrieve and set the theme name.
-                    ThemeModel themeModel = this.themeRepository.findById(article.getThemeId())
-                            .orElseThrow(() -> new RuntimeException("Theme not found"));
-                    articleDTO.setTheme(themeModel.getTheme());
-
+                    ArticleDTO articleDTO = new ArticleDTO();
+                    articleDTO.setId(article.getId());
+                    articleDTO.setTitre(article.getTitre());
+                    articleDTO.setContenu(article.getContenu());
+                    articleDTO.setAuteur(article.getAuteur().getName());
+                    articleDTO.setTheme(article.getTheme().getTheme());
+                    articleDTO.setCreatedAt(article.getCreatedAt().toString());
                     return articleDTO;
                 })
                 .collect(Collectors.toList());
     }
 
     /**
-     * Creates and posts a new article for a given user.
-     *
-     * @param articleDTO The article data to post.
-     * @param userEmail  The email of the author.
-     * @return The saved article as an ArticleDTO.
+     * Creates and posts a new article.
+     * 
+     * <p>
+     * This method takes an {@link ArticleDTO} containing the article's title,
+     * content, and theme,
+     * associates it with the user (author) and the selected theme, and saves it to
+     * the article repository.
+     * </p>
+     * 
+     * @param articleDTO The details of the article to be posted, including title,
+     *                   content, and theme.
+     * @param userEmail  The email of the user posting the article (author).
+     * @throws RuntimeException if the user or theme is not found.
      */
-    public ArticleDTO postArticle(ArticleDTO articleDTO, String userEmail) {
-        // Retrieve the user by email or throw an exception.
-        UserModel user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email"));
 
-        // Validate that the article contains a title and content.
-        if (articleDTO.getContenu() == null || articleDTO.getTitre() == null) {
-            return new ArticleDTO(); // Returns an empty response if validation fails.
-        }
+    @Override
+    public void postArticle(ArticleDTO articleDTO, String userEmail) {
+        ArticleModel article = new ArticleModel();
 
-        // Convert the DTO to an entity model.
-        ArticleModel articleCreated = modelMapper.map(articleDTO, ArticleModel.class);
-        articleCreated.setCreatedAtToNow();
+        UserModel auteur = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Retrieve the theme model based on the theme name.
-        ThemeModel theme = themeRepository.findByTheme(articleDTO.getTheme());
-        Integer themeId = theme.getId();
-
-        // Assign the retrieved theme ID and author ID to the article.
-        articleCreated.setThemeId(themeId);
-        articleCreated.setAuteur_id(user.getId());
-
-        // Save the article in the database.
-        ArticleModel articleModelSaved = articleRepository.save(articleCreated);
-
-        // Convert the saved entity back to DTO format.
-        return modelMapper.map(articleModelSaved, ArticleDTO.class);
+        ThemeModel theme = themeRepository.findByTheme(articleDTO.getTheme())
+                .orElseThrow(() -> new RuntimeException("Theme not found"));
+        article.setTitre(articleDTO.getTitre());
+        article.setContenu(articleDTO.getContenu());
+        article.setAuteur(auteur);
+        article.setTheme(theme);
+        article.setCreatedAt(LocalDateTime.now());
+        articleRepository.save(article);
     }
 }

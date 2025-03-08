@@ -1,10 +1,11 @@
-<div class="header-bloc">
+<div class="header-bloc" *ngIf="!shouldHideHeader()">
 
     <a class="logo_icon" routerLink="" routerLinkActive="active-item">
         <img src="./assets/pictures/small_logo.png" alt="MDD Logo" class="header_logo">
     </a>
 
-    <ul class="ulHeader ">
+    <ul class="ulHeader "   *ngIf="!shouldHideNavItems()">
+        <li class="headerPart"><button class="label_red" (click)="logOut()">Se déconnecter</button> </li>
         <li class="headerPart "><a routerLink="/article/all" routerLinkActive="active-item">Articles</a></li>
         <li class="headerPart "><a routerLink="/themes" routerLinkActive="active-item">Thèmes</a></li>
         <li class="headerPart ">
@@ -18,6 +19,6 @@
 
 </div>
 
-<a class="back" (click)="back()">
+<a class="back" (click)="back()"  *ngIf="!shouldHideBackButton()" >
     <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="west"></mat-icon>
 </a>
